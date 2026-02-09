@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import Nav  from "@/components/Nav";
+import Nav from "@/components/Nav";
 
 export const metadata = {
   title: "Code Work Digital",
@@ -11,20 +11,24 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <header>
-    <div>
-      <img src="/imagenes/CodeWork-logo.png" width="100" alt="logo"/>
-      <h1>CodeWork Digital</h1>
-      <h4>Soluciones web que impulsan tu negocio</h4>
-    </div>
-  </header>
+          <div className="header-container">
+            <img src="/imagenes/CodeWork-logo.png" className="logo" alt="logo"/>
+            <div className="header-text">
+              <h1>CodeWork Digital</h1>
+              <h4>Soluciones web que impulsan tu negocio</h4>
+            </div>
+          </div>
+        </header>
 
-   <Nav/>
+        <Nav />
+
         {children}
 
         <footer>
-    <p>© 2025 CodeWork Digital — Todos los derechos reservados.</p>
-  </footer> 
+          <p>© 2025 CodeWork Digital — Todos los derechos reservados.</p>
+        </footer>
       </body>
     </html>
   );
 }
+

@@ -1,5 +1,7 @@
 import "@/styles/contacto.css";
 import ContactForm from "@/components/ContactForm";
+import { FaWhatsapp } from "react-icons/fa";
+
 
 export const metadata = {
   title: "Code Work Digital - Contacto",
@@ -16,31 +18,28 @@ export default function Contacto() {
             Contanos sobre tu proyecto y te respondemos a la brevedad.
           </p>
 
-          {/* Componente del formulario */}
-          <ContactForm />
-        </div>
+          {/* FORMULARIO */}
+          <ContactForm
+            postUr={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contacto`}
 
-        <div className="contacto-what">
-          {/* CONTACTO WHATSAPP */}
-          <div className="contacto-box">
-            <h3>WhatsApp</h3>
-            <p>Consultas rápidas, presupuestos y atención inmediata.</p>
-            <a
-              href="https://wa.me/393393309228"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-whatsapp"
-            >
-              <button type="button" className="btn-primary form-btn">
-                Enviar WhatsApp
-              </button>
-            </a>
-          </div>
-
-          {/* Formulario alternativo o información adicional */}
-          {/* Puedes añadir más contenido aquí si quieres */}
+          />
         </div>
-      </section>
-    </main>
+      
+
+
+        {/* WHATSAPP */}
+
+        <a
+          href="https://wa.me/393393309228"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary form-btn whatsapp-btn"
+        >
+          <FaWhatsapp className="whatsapp-icon" />
+          Enviar WhatsApp
+        </a>
+
+      </section >
+    </main >
   );
 }

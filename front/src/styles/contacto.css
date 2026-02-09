@@ -1,57 +1,86 @@
-
 /* ================================
-   SECCIONES GENERALES
+   FORMULARIO DE CONTACTO
 ================================ */
-.nosotros,
-.beneficios,
-.servicios {
-  padding: 60px 0;
+
+.contacto-form-wrapper {
+  max-width: 500px;
+  margin: 2.5rem auto;
+  padding: 2.5rem 2rem;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.titulo-contacto {
   text-align: center;
-  /* background: radial-gradient(circle, #aed6dc, #3692bd);*/
+  color: #3692bd;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
 }
 
-.lista-beneficios {
-  max-width: 600px;
-  margin: 0 auto;
-  list-style: none;
-  padding: 0;
-  line-height: 2;
+.texto-contacto {
+  text-align: center;
+  color: white;
+  margin-bottom: 2rem;
 }
 
-/* SERVICES CARDS */
-.service-card {
+.contacto-form p {
+  margin-bottom: 1rem;
+}
+
+.contacto-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.contacto-form input,
+.contacto-form textarea {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.contacto-form input:focus,
+.contacto-form textarea:focus {
+  border-color: #3692bd;
+  box-shadow: 0 0 6px rgba(54, 146, 189, 0.3);
+  outline: none;
   background: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  margin: 20px 0;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  transition: 0.2s;
 }
 
-.servicios .container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  padding: 60px 0;
+.btn-primary.form-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #3692bd, #aed6dc);
+  color: #fff;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
 }
 
-.service-card:hover {
-  transform: translateY(-6px);
+
+.btn-primary.form-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(54, 146, 189, 0.4);
 }
 
-
-/* GRID solo para las tarjetas */
-.cards-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
-  margin-top: 30px;
+.form-msg {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  color: #28a745;
 }
 
-/* Tamaño del card más chico */
-.service-card {
-  background: #fff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
-  padding: 20px;
+.form-msg.error {
+  color: #dc3545;
 }

@@ -1,0 +1,116 @@
+/* ===================
+   HERO SECTION
+=================== */
+.hero {
+  text-align: center;
+  padding: 80px 0;
+  color: #184a70;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  color: #3692bd;
+}
+
+/* ===================
+   SERVICES SECTION
+=================== */
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 40px 0;
+  justify-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.service-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  max-width: 300px;
+  width: 100%;
+  color: #184a70;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.service-card h3 {
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  color: #3692bd;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* ===================
+   CTA FINAL SECTION
+=================== */
+.cta-final {
+  text-align: center;
+  padding: 60px 0;
+  background-color: #184a70;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cta-final h2 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.cta-final p {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  color: #a0c4de;
+}
+
+/* BUTTON - CONTACTAR AHORA */
+.btn-primary.btn-contactar {
+  background: linear-gradient(90deg, #3692bd, #73c8f0);
+  color: white;
+  padding: 14px 28px;
+  border-radius: 32px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(54, 146, 189, 0.4);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-primary.btn-contactar:hover {
+  background: linear-gradient(90deg, #2a76a3, #51b0d8);
+  box-shadow: 0 6px 20px rgba(41, 117, 163, 0.6);
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .services {
+    grid-template-columns: 1fr;
+    padding: 20px 0;
+  }
+
+  .btn-primary.btn-contactar {
+    width: 80%;
+    padding: 12px 0;
+  }
+}
