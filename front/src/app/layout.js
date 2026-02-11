@@ -10,19 +10,29 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <header>
-          <div className="header-container">
-            <img src="/imagenes/CodeWork-logo.png" className="logo" alt="logo"/>
-            <div className="header-text">
-              <h1>CodeWork Digital</h1>
-              <h4>Soluciones web que impulsan tu negocio</h4>
+        {/* CONTENEDOR FIJO */}
+        <div className="fixed-header-nav">
+          <header>
+            <div className="header-container">
+              <img
+                src="/imagenes/CodeWork-logo.png"
+                className="logo"
+                alt="logo"
+              />
+              <div className="header-text">
+                <h1>CodeWork Digital</h1>
+                <h4>Soluciones web que impulsan tu negocio</h4>
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <Nav />
+          <Nav />
+        </div>
 
-        {children}
+        {/* CONTENIDO PRINCIPAL */}
+        <main className="main-content">
+          {children}
+        </main>
 
         <footer>
           <p>© 2025 CodeWork Digital — Todos los derechos reservados.</p>
@@ -31,4 +41,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-

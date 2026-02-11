@@ -1,24 +1,28 @@
+"use client";
+import React from "react";
+import "@/styles/novedades.css";
 
-//export const metadata = {
-  //title: "Code Work Digital",
-  //description: "Soluciones web que impulsan tu negocio",
-//};
+export default function NovedadItem({ title, subtitle, estado, link, imagen }) {
+  const estadoTexto = estado === 1 ? "Activo" : "En Proceso";
+  const estadoClase = estado === 1 ? "estado-activo" : "estado-en proceso";
 
+  // fecha!
+  const formattedDate = subtitle
+    ? new Date(subtitle).toLocaleDateString("es-ES")
+    : "";
 
-export default async function NovedadItem(props) {
-
-    const { title, subtitle,body} = props;
-    return(
-        <div className="novedades">
-
-            <h1>{title}</h1>
-            <h2>{subtitle}</h2>
-            <div dangerouslySetInnerHTML={{__html: body}}/>
-
-
-        <hr />
-
-        </div>
-    );
-    
+  return (
+    <div
+      className="service-card"
+      onClick={() => link && window.open(link, "_blank")}
+    >
+      {imagen && <img src={imagen} alt={title} className="card-img" />}
+      <h1>{title}</h1>
+      <h2>{formattedDate}</h2>
+      <div className="extra-info">
+        Estado: <span className={estadoClase}>{estadoTexto}</span>
+      </div>
+    </div>
+  );
 }
+

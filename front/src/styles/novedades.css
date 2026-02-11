@@ -1,57 +1,57 @@
-
-/* ================================
-   SECCIONES GENERALES
-================================ */
-.nosotros,
-.beneficios,
-.servicios {
-  padding: 60px 0;
-  text-align: center;
-  /* background: radial-gradient(circle, #aed6dc, #3692bd);*/
-}
-
-.lista-beneficios {
-  max-width: 600px;
-  margin: 0 auto;
-  list-style: none;
-  padding: 0;
-  line-height: 2;
-}
-
-/* SERVICES CARDS */
-.service-card {
-  background: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  margin: 20px 0;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  transition: 0.2s;
-}
-
-.servicios .container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  padding: 60px 0;
-}
-
-.service-card:hover {
-  transform: translateY(-6px);
-}
-
-
-/* GRID solo para las tarjetas */
 .cards-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
-  margin-top: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); /* ancho mínimo 300px */
+  gap: 50px;
+  margin-top: 50px;
 }
 
-/* Tamaño del card más chico */
 .service-card {
-  background: #fff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  background: #e0e5ec;
+  border-radius: 16px;
+  padding: 25px; 
+  box-shadow: 8px 8px 16px #c5c9d0, -8px -8px 16px #ffffff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  word-wrap: break-word; 
+}
+
+.service-card img.card-img {
+  width: 100%;
   border-radius: 12px;
-  padding: 20px;
+  margin-bottom: 15px;
+  object-fit: cover;
+  max-height: 180px;
+}
+
+.service-card h1 {
+  font-size: 1.1rem; 
+  margin-bottom: 10px;
+  color: #2b6cb0;
+  word-break: break-word;
+}
+
+.service-card h2 {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  color: #4a5568;
+  word-break: break-word;
+}
+
+.extra-info {
+  font-size: 0.8rem;
+  font-weight: 300;
+  word-break: break-word;
+}
+
+@media screen and (max-width: 768px) {
+  .cards-wrapper {
+    grid-template-columns: 1fr; /* cards full width en móvil */
+  }
+  .service-card {
+    padding: 20px;
+  }
 }

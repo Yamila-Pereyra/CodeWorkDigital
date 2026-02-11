@@ -6,7 +6,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #bdd3e9;
+  background-color: white;
   color: #003F5C;
   font-family: 'Red Hat Display', sans-serif;
 }
@@ -133,6 +133,41 @@ h2 {
     font-size: 18px;
   }
 }
+
+/* ========================
+   HEADER + NAV STICKY
+======================== */
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+/* ========================
+   HEADER + NAV FIJOS
+======================== */
+.fixed-header-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Header dentro del contenedor fijo */
+.fixed-header-nav header {
+  background-color: black;
+}
+
+/* Nav dentro del contenedor fijo */
+.fixed-header-nav nav {
+  background-color: #236d78;
+}
+
+/* Empujar contenido principal para no tapar header + nav */
+.main-content {
+  margin-top: 160px; /* Ajusta según la altura combinada de header + nav */
+}
+
 
 @media (max-width: 768px) {
   nav .holder {

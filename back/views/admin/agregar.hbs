@@ -1,38 +1,24 @@
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-6 offset-3">
-            <h4 class="mb-3">Agregar una nueva novedad</h4>
+<h2>Agregar Novedad</h2>
 
-            <form action="/admin/novedades/agregar" method="post">
+{{#if error}}
+    <p style="color:red">{{message}}</p>
+{{/if}}
 
-                <div class="mb-3">
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Título"
-                           name="titulo">
-                </div>
+<form action="/admin/novedades/agregar" method="POST">
+    <label>Título:</label>
+    <input type="text" name="titulo" required>
 
-                <div class="mb-3">
-                    <textarea class="form-control"
-                              placeholder="Subtítulo"
-                              name="subtitulo"></textarea>
-                </div>
+    <label>Descripción:</label>
+    <textarea name="descripcion" required></textarea>
 
-                <div class="mb-3">
-                    <textarea class="form-control"
-                              placeholder="Cuerpo"
-                              name="cuerpo"
-                              rows="5"></textarea>
-                </div>
+    <label>Fecha de Publicación:</label>
+    <input type="text" name="fecha_publicacion" placeholder="YYYY-MM-DD" required>
 
-                <button type="submit" class="btn btn-primary">
-                    Guardar
-                </button>
-            </form>
+    <label>Estado:</label>
+    <select name="estado" required>
+        <option value="1">Activo</option>
+        <option value="0">Inactivo</option>
+    </select>
 
-            {{#if error}}
-                <p class="text-danger mt-3">{{message}}</p>
-            {{/if}}
-        </div>
-    </div>
-</div>
+    <button type="submit">Agregar</button>
+</form>

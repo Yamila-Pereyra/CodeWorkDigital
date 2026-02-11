@@ -1,29 +1,15 @@
-/* HERO */
-.hero-section {
-  background: linear-gradient(135deg, #3692bd, #aed6dc);
-  color: #fff;
-  padding: 80px 20px;
+/* SERVICIOS */
+.servicios {
+  padding: 60px 0;
+  background: white;
   text-align: center;
-  border-radius: 12px;
 }
 
-.hero-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.hero-section p.subtitulo {
-  font-size: 1.1rem;
-  max-width: 700px;
-  margin: 0 auto 30px auto;
-  line-height: 1.5;
-}
-
-.hero-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+.titulo-servicios {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  text-align: center;
+  /* TITULO CENTRADO */
 }
 
 /* BOTONES */
@@ -39,13 +25,13 @@
 }
 
 .btn-primary {
-  background-color: rgb(110, 252, 122);
-  color: #032e08;
+  background-color: rgb(253, 108, 12);
+  color: #1a140c;
   border: 5px solid transparent;
 }
 
 .btn-primary:hover {
-  background-color: #0ca231;
+  background-color: #ef7e06;
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(255, 107, 107, 0.35);
 }
@@ -53,7 +39,7 @@
 .btn-outline {
   background-color: transparent;
   color: #032e08;
-  border: 5px solid rgb(110, 252, 122);
+  border: 5px solid rgb(207, 96, 11);
 }
 
 .btn-outline:hover {
@@ -63,45 +49,38 @@
   box-shadow: 0 8px 20px rgba(255, 107, 107, 0.25);
 }
 
-/* SERVICIOS */
-.servicios {
-  padding: 60px 0;
-  background: #f9f9f9;
-  text-align: center;
-}
-
-.titulo-servicios {
-  font-size: 2rem;
-  margin-bottom: 40px;
-  text-align: center; /* TITULO CENTRADO */
-}
-
-/* GRID PARA CARDS – tres columnas exactas y ancho completo */
+/* GRID PARA CARDS – tres columna exactas y ancho completo */
 .cards-wrapper {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas en escritorio */
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 columnas en escritorio */
   gap: 20px;
   margin: 0 auto;
-  width: 100%; /* ancho completo */
-  max-width: 1200px; /* opcional para que no quede demasiado gigante en pantallas grandes */
+  width: 100%;
+  /* ancho completo */
+  max-width: 1200px;
 }
 
 .service-card {
-  background: #fff;
+  background: black;
+  /* fondo inicial negro */
   padding: 30px 20px;
   border-radius: 16px;
   text-align: center;
-  color: #333;
-  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+  color: #d49494;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease, color 0.4s ease;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+
+  /* sombra negra inicial */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
 }
 
 /* ICONOS */
 .card-icon {
   font-size: 2.5rem;
-  color: #032e08;
+  color: #e45319;
   margin-bottom: 15px;
 }
 
@@ -125,7 +104,12 @@
 
 .service-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  /* sombra más intensa y fondo azul */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
+  background: #0d3b66;
+  /* azul más oscuro */
+  color: #ffffff;
+  /* texto blanco para contraste */
 }
 
 .service-card h3 {
@@ -138,29 +122,29 @@
 .service-card p {
   font-size: 0.95rem;
   line-height: 1.5;
-  color: #555;
+  color: #f0ded4;
   position: relative;
   z-index: 1;
 }
 
 /* CTA FINAL */
 .cta-final {
-  background-color: #3692bd;
-  color: #fff;
   text-align: center;
-  padding: 60px 20px;
-  border-radius: 12px;
-  margin-top: 40px;
+  padding: 60px 0;
+  background-color: white;
+  color: #f78809;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .cta-final h2 {
   font-size: 2rem;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .cta-final p {
-  font-size: 1.05rem;
-  margin-bottom: 30px;
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+  color: #f78809;
 }
 
 .cta-final .btn-contactar {
