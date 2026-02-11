@@ -1,7 +1,9 @@
+<link rel="stylesheet" href="/css/style.css">
+
 <h2>Agregar Novedad</h2>
 
 {{#if error}}
-    <p style="color:red">{{message}}</p>
+    <p class="error">{{message}}</p>
 {{/if}}
 
 <form action="/admin/novedades/agregar" method="POST">

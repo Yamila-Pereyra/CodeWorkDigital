@@ -368,3 +368,47 @@ h2 {
   color: black;
   font-weight: 600;
 }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #236d78;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+}
+
+form label {
+  font-weight: bold;
+}
+
+form input,
+form textarea,
+form select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+form button {
+  padding: 10px;
+  border: none;
+  background-color: #236d78;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+form button:hover {
+  background-color: #1b565f;
+}
+
+p.error {
+  color: red;
+  font-weight: bold;
+}

@@ -3,6 +3,9 @@
 ================================ */
 @import url('https://fonts.googleapis.com/css2?family=Michroma&family=Red+Hat+Display:wght@300;400;600;700&display=swap');
 
+/* ================================
+   BODY
+================================ */
 body {
   margin: 0;
   padding: 0;
@@ -11,7 +14,9 @@ body {
   font-family: 'Red Hat Display', sans-serif;
 }
 
-/* TIPOGRAFÍAS */
+/* ================================
+   TIPOGRAFÍAS
+================================ */
 h1, h2, h3, h4, header h1, header h4 {
   font-family: 'Michroma', sans-serif;
   letter-spacing: 1px;
@@ -25,23 +30,25 @@ p, li, a, button, input, textarea, label {
   line-height: 1.5;
 }
 
-/* HEADER MODERNO */
+/* ================================
+   HEADER
+================================ */
 header {
   background-color: black;
   width: 100%;
 }
 
 .header-container {
-  max-width: 1200px;     /* ancho máximo del contenido */
-  margin: 0 auto;        /* centrado horizontal */
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 20px 20px;    /* padding horizontal pequeño */
+  padding: 20px 20px;
 }
 
 .logo {
-  width: 150px;           /* tamaño de la imagen */
+  width: 150px;
   height: auto;
 }
 
@@ -58,7 +65,9 @@ header {
   margin: 0;
 }
 
-/* NAVBAR */
+/* ================================
+   NAVBAR
+================================ */
 nav {
   background-color: #236d78;
   padding: 10px 0;
@@ -90,7 +99,9 @@ nav .holder li a.activo {
   color: #2e8e9a;
 }
 
-/* HERO SECTION */
+/* ================================
+   HERO SECTION
+================================ */
 .hero-section {
   padding: 80px 20px;
   text-align: center;
@@ -112,7 +123,61 @@ h2 {
   color: #003F5C;
 }
 
-/* RESPONSIVE */
+/* ================================
+   HEADER + NAV FIJOS
+================================ */
+.fixed-header-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.fixed-header-nav header {
+  background-color: black;
+}
+
+.fixed-header-nav nav {
+  background-color: #236d78;
+}
+
+/* Empujar contenido principal para no tapar header + nav */
+.main-content {
+  margin-top: 160px;
+}
+
+/* ================================
+   BOTÓN HAMBURGUESA
+================================ */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 25px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 20px;
+}
+
+.menu-toggle:focus {
+  outline: none;
+}
+
+.menu-toggle .bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s linear;
+}
+
+/* ================================
+   RESPONSIVE GENERAL
+================================ */
 @media (max-width: 1024px) {
   .header-container {
     flex-direction: column;
@@ -134,47 +199,75 @@ h2 {
   }
 }
 
-/* ========================
-   HEADER + NAV STICKY
-======================== */
-.sticky-top {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-/* ========================
-   HEADER + NAV FIJOS
-======================== */
-.fixed-header-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-/* Header dentro del contenedor fijo */
-.fixed-header-nav header {
-  background-color: black;
-}
-
-/* Nav dentro del contenedor fijo */
-.fixed-header-nav nav {
-  background-color: #236d78;
-}
-
-/* Empujar contenido principal para no tapar header + nav */
-.main-content {
-  margin-top: 160px; /* Ajusta según la altura combinada de header + nav */
-}
-
-
+/* ================================
+   RESPONSIVE MÓVIL
+================================ */
 @media (max-width: 768px) {
-  nav .holder {
+
+  /* HEADER + TEXTOS COMPACTOS */
+  .fixed-header-nav header .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+  }
+
+  .fixed-header-nav header .logo {
+    width: 80px;
+  }
+
+  .fixed-header-nav header .header-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .fixed-header-nav header .header-text h1 {
+    font-size: 20px;
+    margin-bottom: 2px;
+  }
+
+  .fixed-header-nav header .header-text h4 {
+    font-size: 12px;
+    margin: 0;
+  }
+
+  /* MAIN CONTENT - empuja contenido debajo del header fijo */
+  .main-content {
+    margin-top: 60px; /* altura header móvil */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    overflow-x: hidden;
+  }
+
+  .main-content > * {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* BOTÓN HAMBURGUESA */
+  .menu-toggle {
+    display: flex;
+  }
+
+ /* MENU RESPONSIVE DESPLEGABLE */
+nav .holder {
+    display: none;
     flex-direction: column;
     gap: 1rem;
     align-items: center;
-  }
+    background-color: #236d78;
+    position: absolute;
+    width: 100%;
+    top: 80px; /* <- subí esto de 60px a 80px */
+    left: 0;
+    padding: 10px ;
+    z-index: 1001;
 }
 
-
+  nav .holder.open {
+    display: flex;
+  }
+}
