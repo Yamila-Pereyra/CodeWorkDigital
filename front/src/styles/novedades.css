@@ -20,9 +20,9 @@
 
 .cards-wrapper {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* SIEMPRE 2 columnas en desktop */
-  column-gap: 60px;  /* 👈 espacio horizontal */
-  row-gap: 40px;     /* 👈 espacio vertical */
+  grid-template-columns: repeat(2, 1fr); 
+  column-gap: 60px;  /* espacio horizontal */
+  row-gap: 40px;     /*  espacio vertical */
 
   width: 85%;
   max-width: 1200px;
@@ -78,7 +78,7 @@
 @media screen and (max-width: 900px) {
 
   .cards-wrapper {
-    grid-template-columns: 1fr; /* 1 columna en móvil */
+    grid-template-columns: 1fr; 
     width: 92%;
   }
 

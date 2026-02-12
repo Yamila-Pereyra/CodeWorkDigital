@@ -10,14 +10,14 @@ export default function Nav() {
 
   const isActive = (path) => path === pathname;
 
-  // Para cerrar menú al hacer click en link en móvil
+  // Para cerrar menu al hacer click en link en cel
   const handleLinkClick = () => {
     if (isOpen) setIsOpen(false);
   };
 
   return (
     <nav>
-      {/* Botón hamburguesa, solo visible en móvil */}
+      {/* Boton hamburguesa, solo visible en cel */}
       <button
         className="menu-toggle"
         aria-label="Toggle menu"
