@@ -1,57 +1,85 @@
-.cards-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); /* ancho mínimo 300px */
-  gap: 50px;
-  margin-top: 50px;
+/* =========================
+   CONTENEDOR PRINCIPAL
+========================= */
+
+.novedades-container {
+  width: 100%;
+  padding-top: 20px;
 }
 
-.service-card {
+.novedades-container h1 {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+
+/* =========================
+   GRID DE CARDS
+========================= */
+
+.cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* SIEMPRE 2 columnas en desktop */
+  column-gap: 60px;  /* 👈 espacio horizontal */
+  row-gap: 40px;     /* 👈 espacio vertical */
+
+  width: 85%;
+  max-width: 1200px;
+  margin: 0 auto 80px auto;
+}
+
+
+/* =========================
+   CARD INDIVIDUAL
+========================= */
+
+.novedad-card {
   background: #e0e5ec;
   border-radius: 16px;
-  padding: 25px; 
+  padding: 30px;
   box-shadow: 8px 8px 16px #c5c9d0, -8px -8px 16px #ffffff;
   transition: all 0.3s ease;
   cursor: pointer;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  word-wrap: break-word; 
+
+  min-height: 170px;
 }
 
-.service-card img.card-img {
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  object-fit: cover;
-  max-height: 180px;
+.novedad-card:hover {
+  transform: translateY(-5px);
 }
 
-.service-card h1 {
-  font-size: 1.1rem; 
+
+/* =========================
+   TITULOS
+========================= */
+
+.novedad-card h1 {
+  font-size: 1.3rem;
   margin-bottom: 10px;
   color: #2b6cb0;
-  word-break: break-word;
 }
 
-.service-card h2 {
-  font-size: 0.95rem;
-  margin-bottom: 10px;
+.novedad-card h2 {
+  font-size: 1rem;
+  margin-bottom: 15px;
   color: #4a5568;
-  word-break: break-word;
 }
 
 .extra-info {
-  font-size: 0.8rem;
-  font-weight: 300;
-  word-break: break-word;
+  font-size: 0.9rem;
 }
 
-@media screen and (max-width: 768px) {
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 900px) {
+
   .cards-wrapper {
-    grid-template-columns: 1fr; /* cards full width en móvil */
+    grid-template-columns: 1fr; /* 1 columna en móvil */
+    width: 92%;
   }
-  .service-card {
-    padding: 20px;
-  }
+
 }

@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import "@/styles/novedades.css";
+
 
 export default function NovedadItem({ title, subtitle, estado, link, imagen }) {
   const estadoTexto = estado === 1 ? "Activo" : "En Proceso";
-  const estadoClase = estado === 1 ? "estado-activo" : "estado-en proceso";
+  const estadoClase = estado === 1 ? "estado-activo" : "estado-en-proceso";
 
   // fecha!
   const formattedDate = subtitle
@@ -13,7 +13,7 @@ export default function NovedadItem({ title, subtitle, estado, link, imagen }) {
 
   return (
     <div
-      className="service-card"
+      className="novedad-card"
       onClick={() => link && window.open(link, "_blank")}
     >
       {imagen && <img src={imagen} alt={title} className="card-img" />}
