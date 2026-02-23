@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AiOutlineSend } from 'react-icons/ai';
 
 
-export default function ContactForm({ postUr }) {
+export default function contactForm({ postUr }) {
   const initialForm = { nombre: '', email: '', telefono: '', mensaje: '' };
   const [formData, setFormData] = useState(initialForm);
   const [sending, setSending] = useState(false);
