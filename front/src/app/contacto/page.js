@@ -1,5 +1,5 @@
 import "@/styles/contacto.css";
-import ContactForm from "@/components/ContactForm";
+import contactForm from "@/components/contactForm";
 import { FaWhatsapp } from "react-icons/fa";
 
 export const metadata = {
@@ -18,7 +18,7 @@ export default function Contacto() {
           </p>
 
           {/* FORMULARIO */}
-          <ContactForm
+          <contactForm
             postUr={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contacto`}
           />
 

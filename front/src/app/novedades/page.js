@@ -23,7 +23,11 @@ export default async function Novedades() {
               body={item.descripcion || item.cuerpo} //descripcion nueva
               estado={item.estado} // 1 = activo, 0 = inactivo
               link={item.link} // opcional, para redirigir
+
               imagen={item.imagen} // para futura imagen que quiero poner
+
+              imagen={item.imagen} // para futura imagen
+
             />
           ))
         ) : (

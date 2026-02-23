@@ -193,15 +193,53 @@ h2 {
   .header-text h1 {
     font-size: 36px;
   }
-
+>
   .header-text h4 {
     font-size: 18px;
   }
 }
 
+
 /* ================================
    RESPONSIVE MÓVIL
 ================================ */
+=======
+/* ========================
+   HEADER + NAV STICKY
+======================== */
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+/* ========================
+   HEADER + NAV FIJOS
+======================== */
+.fixed-header-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Header dentro del contenedor fijo */
+.fixed-header-nav header {
+  background-color: black;
+}
+
+/* Nav dentro del contenedor fijo */
+.fixed-header-nav nav {
+  background-color: #236d78;
+}
+
+/* Empujar contenido principal para no tapar header + nav */
+.main-content {
+  margin-top: 160px; /* Ajusta según la altura combinada de header + nav */
+}
+
+
+> c0c8bc3 (fix case sensitive import)
 @media (max-width: 768px) {
 
   /* HEADER + TEXTOS COMPACTOS */
