@@ -1,11 +1,15 @@
 {
-  "name": "front",
+  "name": "codeworkdigital-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/validate-frontend-structure.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/validate-frontend-structure.mjs",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "validate:structure": "node scripts/validate-frontend-structure.mjs",
+    "validate": "npm run validate:structure && npm run build"
   },
   "dependencies": {
     "next": "14.2.7",
