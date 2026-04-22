@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "validate:structure": "node scripts/validate-frontend-structure.mjs",
-    "validate": "npm run validate:structure && npm run build"
+    "validate:novedades-contract": "node scripts/validate-novedades-contract.mjs",
+    "validate": "npm run validate:structure && npm run validate:novedades-contract && npm run build"
   },
   "dependencies": {
     "next": "14.2.7",

@@ -7,20 +7,26 @@
 {{/if}}
 
 <form action="/admin/novedades/agregar" method="POST">
-    <label>Título:</label>
-    <input type="text" name="titulo" required>
+    <label>Titulo:</label>
+    <input type="text" name="titulo" value="{{novedad.titulo}}" required>
 
-    <label>Descripción:</label>
-    <textarea name="descripcion" required></textarea>
+    <label>Descripcion:</label>
+    <textarea name="descripcion" required>{{novedad.descripcion}}</textarea>
 
-    <label>Fecha de Publicación:</label>
-    <input type="text" name="fecha_publicacion" placeholder="YYYY-MM-DD" required>
+    <label>Fecha de Publicacion:</label>
+    <input type="date" name="fecha_publicacion" value="{{novedad.fecha_publicacion}}" required>
 
     <label>Estado:</label>
     <select name="estado" required>
-        <option value="1">Activo</option>
-        <option value="0">Inactivo</option>
+        <option value="1" {{#if novedad.estado_activo}}selected{{/if}}>Activo</option>
+        <option value="0" {{#if novedad.estado_inactivo}}selected{{/if}}>Inactivo</option>
     </select>
+
+    <label>Link (opcional):</label>
+    <input type="url" name="link" value="{{novedad.link}}">
+
+    <label>Cloudinary img_id (opcional):</label>
+    <input type="text" name="img_id" value="{{novedad.img_id}}">
 
     <button type="submit">Agregar</button>
 </form>

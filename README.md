@@ -36,8 +36,23 @@ Frontend disponible en `http://localhost:3000`.
 Se agregaron compuertas basicas para el frontend canonico:
 
 - `npm run validate:structure`: verifica que la raiz siga siendo la fuente canonica y que `front/` permanezca archivado.
-- `npm run validate`: ejecuta la validacion estructural y luego el build del frontend raiz.
+- `npm run validate:novedades-contract`: verifica que el runtime use el contrato canonico de `novedades` y no referencias legadas.
+- `npm run validate`: ejecuta la validacion estructural, valida el contrato de `novedades` y luego compila el frontend raiz.
 - `npm run build`: corre primero la validacion estructural y despues compila Next.js.
+
+## Contrato canonico de novedades
+
+La forma canonica de `novedad` en el sistema es:
+
+- `id`
+- `titulo`
+- `descripcion`
+- `fecha_publicacion`
+- `estado`
+- `img_id` opcional
+- `link` opcional
+
+La API publica tambien `imagen` como campo derivado desde `img_id`. Los campos legados `subtitulo` y `cuerpo` quedan fuera del contrato activo.
 
 ## Frontend legado
 
