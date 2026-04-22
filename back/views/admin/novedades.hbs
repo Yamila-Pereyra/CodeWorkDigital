@@ -3,7 +3,7 @@
         <p class="text-end">
             Hola {{usuario}}
             <a class="btn btn-danger ms-2" href="/logout">
-                Cerrar sesión <i class="fas fa-sign-out-alt"></i>
+                Cerrar sesion <i class="fas fa-sign-out-alt"></i>
             </a>
         </p>
     </div>
@@ -23,16 +23,19 @@
                 <thead>
                     <tr class="table-dark">
                         <th scope="col">#</th>
-                        <th scope="col">Título</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>
                         <th class="text-end">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-
                     {{#each novedades}}
                     <tr>
                         <th scope="row">{{id}}</th>
                         <td>{{titulo}}</td>
+                        <td>{{fecha_publicacion}}</td>
+                        <td>{{#if estado}}Activo{{else}}Inactivo{{/if}}</td>
                         <td class="text-center">
                             <a class="btn btn-secondary" href="/admin/novedades/modificar/{{id}}"><i class="fas fa-pencil-alt"></i>
                             </a>
@@ -41,7 +44,6 @@
                         </td>
                     </tr>
                     {{/each}}
-
                 </tbody>
             </table>
         </div>
