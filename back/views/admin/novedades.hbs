@@ -39,8 +39,11 @@
                         <td class="text-center">
                             <a class="btn btn-secondary" href="/admin/novedades/modificar/{{id}}"><i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a class="btn btn-secondary" href="/admin/novedades/eliminar/{{id}}">
-                                <i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <form action="/admin/novedades/eliminar/{{id}}" method="POST" style="display:inline;">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     {{/each}}

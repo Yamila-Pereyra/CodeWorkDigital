@@ -101,6 +101,17 @@ Limitacion actual:
 - la sesion sigue usando `MemoryStore` de `express-session`;
 - se endurecio la configuracion, pero no se incorporo un store persistente en este incremento para evitar complejidad operativa adicional.
 
+## Organizacion pragmatica del backend
+
+El backend sigue una separacion liviana:
+
+- `routes/`: define endpoints y delega.
+- `controllers/`: resuelve flujo HTTP y renderizado/respuesta.
+- `services/`: concentra logica de negocio y orquestacion.
+- `lib/`: helpers puros, contratos, integraciones y utilidades compartidas.
+
+La idea es mantener rutas delgadas y encapsular integraciones externas o validaciones repetidas fuera de Express.
+
 ## Politica minima de versionado
 
 Debe vivir en el repo:
