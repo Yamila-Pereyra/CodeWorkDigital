@@ -21,6 +21,13 @@ Desde la raiz del repositorio:
 npm install
 ```
 
+Para el backend:
+
+```bash
+cd back
+npm install
+```
+
 ## Ejecucion del frontend correcto
 
 Desde la raiz del repositorio:
@@ -31,13 +38,30 @@ npm run dev
 
 Frontend disponible en `http://localhost:3000`.
 
+## Setup local sin secretos versionados
+
+- El frontend no requiere archivo `.env` en la raiz para el estado actual del repo.
+- El backend debe configurarse creando `back/.env` a partir de `back/.env.example`.
+- `back/.env.example` es la plantilla versionada.
+- `back/.env` es local y no debe commitearse.
+
+Flujo recomendado:
+
+```bash
+cd back
+copy .env.example .env
+```
+
+Luego completar localmente los valores sensibles.
+
 ## Validaciones minimas
 
 Se agregaron compuertas basicas para el frontend canonico:
 
 - `npm run validate:structure`: verifica que la raiz siga siendo la fuente canonica y que `front/` permanezca archivado.
 - `npm run validate:novedades-contract`: verifica que el runtime use el contrato canonico de `novedades` y no referencias legadas.
-- `npm run validate`: ejecuta la validacion estructural, valida el contrato de `novedades` y luego compila el frontend raiz.
+- `npm run validate:repo-hygiene`: verifica que no haya secretos ni artefactos impropios versionados.
+- `npm run validate`: ejecuta la validacion estructural, la higiene operativa, valida el contrato de `novedades` y luego compila el frontend raiz.
 - `npm run build`: corre primero la validacion estructural y despues compila Next.js.
 
 ## Contrato canonico de novedades
@@ -76,6 +100,31 @@ Limitacion actual:
 
 - la sesion sigue usando `MemoryStore` de `express-session`;
 - se endurecio la configuracion, pero no se incorporo un store persistente en este incremento para evitar complejidad operativa adicional.
+
+## Politica minima de versionado
+
+Debe vivir en el repo:
+
+- codigo fuente
+- configuracion plantilla
+- `package.json`
+- `package-lock.json`
+- scripts de validacion
+- documentacion
+
+No debe vivir en el repo:
+
+- secretos reales
+- `back/.env`
+- `node_modules`
+- `.next`
+- logs
+- metadatos locales de IDE
+
+Accion manual posterior recomendada:
+
+- rotar cualquier secreto previamente expuesto en `back/.env`
+- evaluar limpieza del historial Git si esos secretos ya quedaron publicados en commits anteriores
 
 ## Frontend legado
 
