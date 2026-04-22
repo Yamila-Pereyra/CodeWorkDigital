@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
           <header>
             <div className="header-container">
               <img
-                src="/imagenes/CodeWork-logo.png"
+                src="/Imagenes/CodeWork-logo.png"
                 className="logo"
                 alt="logo"
               />
