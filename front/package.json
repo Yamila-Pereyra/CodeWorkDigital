@@ -1,11 +1,11 @@
 {
-  "name": "front",
+  "name": "legacy-front-archive",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "node ./legacy-frontend-warning.mjs",
+    "build": "node ./legacy-frontend-warning.mjs",
+    "start": "node ./legacy-frontend-warning.mjs"
   },
   "dependencies": {
     "next": "15.5.11",
