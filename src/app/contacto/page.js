@@ -1,5 +1,5 @@
 import "@/styles/contacto.css";
-import contactForm from "@/components/contactForm";
+import ContactForm from "@/components/ContactForm";
 import { FaWhatsapp } from "react-icons/fa";
 
 export const metadata = {
@@ -17,12 +17,10 @@ export default function Contacto() {
             Contanos sobre tu proyecto y te respondemos a la brevedad.
           </p>
 
-          {/* FORMULARIO */}
-          <contactForm
+          <ContactForm
             postUr={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contacto`}
           />
 
-          {/* WHATSAPP */}
           <div className="whatsapp-contacto">
             <a
               href="https://wa.me/393393309228"
@@ -39,4 +37,3 @@ export default function Contacto() {
     </main>
   );
 }
-
