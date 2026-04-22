@@ -54,6 +54,29 @@ La forma canonica de `novedad` en el sistema es:
 
 La API publica tambien `imagen` como campo derivado desde `img_id`. Los campos legados `subtitulo` y `cuerpo` quedan fuera del contrato activo.
 
+## Backend y seguridad
+
+El backend toma configuracion sensible desde variables de entorno. Para replicar la configuracion base usar `back/.env.example`.
+
+Variables relevantes para hardening:
+
+- `SESSION_SECRET`: secreto de sesion obligatorio en produccion.
+- `SESSION_COOKIE_NAME`: nombre de la cookie de sesion.
+- `SESSION_MAX_AGE_MS`: duracion de la sesion en milisegundos.
+- `TRUST_PROXY`: usar `true` si el backend corre detras de proxy y se necesita cookie `secure`.
+- `CORS_ALLOWED_ORIGINS`: lista separada por comas de origenes permitidos para `/api`.
+
+Autenticacion:
+
+- el backend ya no usa MD5 como mecanismo principal;
+- acepta temporalmente hashes legacy MD5 solo para compatibilidad de login;
+- cuando un usuario con hash legacy inicia sesion correctamente, su password se migra automaticamente a un hash seguro basado en `scrypt`.
+
+Limitacion actual:
+
+- la sesion sigue usando `MemoryStore` de `express-session`;
+- se endurecio la configuracion, pero no se incorporo un store persistente en este incremento para evitar complejidad operativa adicional.
+
 ## Frontend legado
 
 `front/` se conserva solo como resguardo historico. No debe:
