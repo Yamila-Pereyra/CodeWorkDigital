@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "validate": "node -e \"require('./app'); console.log('Backend app loaded successfully.')\""
   },
   "dependencies": {
     "cloudinary": "^2.9.0",
