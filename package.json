@@ -8,10 +8,12 @@
     "prebuild": "node scripts/validate-frontend-structure.mjs",
     "build": "next build",
     "start": "next start",
+    "test:backend": "npm --prefix back run test",
+    "validate:backend": "npm --prefix back run validate:all",
     "validate:structure": "node scripts/validate-frontend-structure.mjs",
     "validate:repo-hygiene": "node scripts/validate-repo-hygiene.mjs",
     "validate:novedades-contract": "node scripts/validate-novedades-contract.mjs",
-    "validate": "npm run validate:structure && npm run validate:repo-hygiene && npm run validate:novedades-contract && npm run build"
+    "validate": "npm run validate:structure && npm run validate:repo-hygiene && npm run validate:novedades-contract && npm run validate:backend && npm run build"
   },
   "dependencies": {
     "next": "14.2.7",

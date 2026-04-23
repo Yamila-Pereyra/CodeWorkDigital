@@ -59,10 +59,19 @@ Luego completar localmente los valores sensibles.
 Se agregaron compuertas basicas para el frontend canonico:
 
 - `npm run validate:structure`: verifica que la raiz siga siendo la fuente canonica y que `front/` permanezca archivado.
-- `npm run validate:novedades-contract`: verifica que el runtime use el contrato canonico de `novedades` y no referencias legadas.
+- `npm run validate:novedades-contract`: verifica el contrato canonico de `novedades` con checks de comportamiento sobre normalizacion y serializacion, ademas de revisar referencias legadas.
 - `npm run validate:repo-hygiene`: verifica que no haya secretos ni artefactos impropios versionados.
-- `npm run validate`: ejecuta la validacion estructural, la higiene operativa, valida el contrato de `novedades` y luego compila el frontend raiz.
+- `npm run test:backend`: corre tests minimos utiles del backend con el runner nativo de Node.
+- `npm run validate:backend`: carga la app backend y ejecuta esos tests.
+- `npm run validate`: ejecuta la validacion estructural, la higiene operativa, valida el contrato de `novedades`, valida el backend y luego compila el frontend raiz.
 - `npm run build`: corre primero la validacion estructural y despues compila Next.js.
+
+Tests backend cubiertos hoy:
+
+- contrato canonico de `novedades`
+- serializacion publica de novedades
+- validacion y configuracion del formulario de contacto
+- smoke test de carga y respuestas base del backend
 
 ## Contrato canonico de novedades
 
