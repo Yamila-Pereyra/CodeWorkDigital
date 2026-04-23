@@ -1,7 +1,6 @@
 # dependencies
 /node_modules
 /back/node_modules
-/front/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -12,7 +11,6 @@
 
 # build artifacts
 /.next
-/front/.next
 /back/.next
 /out
 /build

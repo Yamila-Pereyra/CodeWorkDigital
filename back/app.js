@@ -10,7 +10,6 @@ require("dotenv").config({ path: path.join(__dirname, ".env") });
 var session = require("express-session");
 
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
 var loginRouter = require("./routes/admin/login");
 var adminRouter = require("./routes/admin/novedades");
 var apiRouter = require("./routes/api");
@@ -121,7 +120,6 @@ if (isProduction) {
 }
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 app.use("/admin/login", loginRouter);
 app.use("/admin/novedades", secured, adminRouter);
 app.use("/api", apiCors, apiRouter);

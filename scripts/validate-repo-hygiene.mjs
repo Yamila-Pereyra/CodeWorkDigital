@@ -1,10 +1,15 @@
 import { execFileSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import path from "node:path";
+
+const root = process.cwd();
 
 const trackedFiles = execFileSync("git", ["ls-files"], {
   encoding: "utf8",
 })
   .split(/\r?\n/)
-  .filter(Boolean);
+  .filter(Boolean)
+  .filter((file) => existsSync(path.join(root, file)));
 
 const disallowedPatterns = [
   {
@@ -18,6 +23,10 @@ const disallowedPatterns = [
   {
     description: "tracked Next build artifact",
     test: (file) => file.includes(".next/"),
+  },
+  {
+    description: "tracked deprecated frontend copy",
+    test: (file) => file === "front" || file.startsWith("front/"),
   },
   {
     description: "tracked IDE metadata",
