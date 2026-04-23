@@ -52,6 +52,21 @@ copy .env.example .env
 
 Luego completar localmente los valores sensibles.
 
+## Base de datos
+
+La fuente SQL canonica del proyecto vive en `database/`.
+
+- `database/schema.sql`: schema canonico de `novedades`
+- `database/seed.sql`: seed canonico inicial de `novedades`
+
+Uso recomendado:
+
+1. crear o seleccionar la base configurada en `MYSQL_DB_NAME`
+2. ejecutar `database/schema.sql`
+3. ejecutar `database/seed.sql`
+
+Los archivos SQL historicos fuera de `database/` ya no forman parte de la fuente operativa activa.
+
 ## Validaciones minimas
 
 Se agregaron compuertas basicas para el frontend canonico:
