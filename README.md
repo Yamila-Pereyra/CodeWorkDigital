@@ -56,8 +56,8 @@ Luego completar localmente los valores sensibles.
 
 La fuente SQL canonica del proyecto vive en `database/`.
 
-- `database/schema.sql`: schema canonico de `novedades`
-- `database/seed.sql`: seed canonico inicial de `novedades`
+- `database/schema.sql`: schema canonico del runtime real (`usuarios` + `novedades`)
+- `database/seed.sql`: bootstrap canonico inicial (`admin` + datos iniciales de `novedades`)
 
 Uso recomendado:
 
@@ -67,16 +67,24 @@ Uso recomendado:
 
 Los archivos SQL historicos fuera de `database/` ya no forman parte de la fuente operativa activa.
 
+Bootstrap admin inicial:
+
+- usuario: `admin`
+- password inicial: `admin1234`
+
+Ese usuario existe solo para bootstrap del entorno. Debe cambiarse la credencial luego del primer ingreso al admin.
+
 ## Validaciones minimas
 
 Se agregaron compuertas basicas para el frontend canonico:
 
 - `npm run validate:structure`: verifica que la raiz siga siendo la unica fuente canonica del frontend.
+- `npm run validate:database-bootstrap`: verifica que la fuente SQL canonica cubra el runtime real (`usuarios` + `novedades`).
 - `npm run validate:novedades-contract`: verifica el contrato canonico de `novedades` con checks de comportamiento sobre normalizacion y serializacion, ademas de revisar referencias legadas.
 - `npm run validate:repo-hygiene`: verifica que no haya secretos ni artefactos impropios versionados.
 - `npm run test:backend`: corre tests minimos utiles del backend con el runner nativo de Node.
 - `npm run validate:backend`: carga la app backend y ejecuta esos tests.
-- `npm run validate`: ejecuta la validacion estructural, la higiene operativa, valida el contrato de `novedades`, valida el backend y luego compila el frontend raiz.
+- `npm run validate`: ejecuta la validacion estructural, la higiene operativa, valida el bootstrap SQL, valida el contrato de `novedades`, valida el backend y luego compila el frontend raiz.
 - `npm run build`: corre primero la validacion estructural y despues compila Next.js.
 
 Tests backend cubiertos hoy:

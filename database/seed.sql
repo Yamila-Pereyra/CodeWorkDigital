@@ -1,6 +1,20 @@
 -- Canonical seed for the database selected in MYSQL_DB_NAME.
 -- Run this script after database/schema.sql.
 
+-- Bootstrap admin user:
+-- usuario: admin
+-- password: admin1234
+-- Change this password after the first successful login.
+INSERT INTO usuarios (usuario, password)
+SELECT
+  'admin',
+  'scrypt$04d05a6ed80d9cc02cf8c4fa46ba6e5c$3658cfdfacfa099947a015955678d4871e8ef178bbb7ca498a4b3ee4fa6f4069645579313f4824f42188268877987dfb0d8b3306010e614968ae739c2e4cb58c'
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM usuarios
+  WHERE usuario = 'admin'
+);
+
 INSERT INTO novedades (titulo, descripcion, fecha_publicacion, estado, img_id, link) VALUES
   (
     'Tendencias diseno web 2026: claves para adelantarte al futuro',
