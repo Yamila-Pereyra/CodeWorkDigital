@@ -74,12 +74,18 @@ Bootstrap admin inicial:
 
 Ese usuario existe solo para bootstrap del entorno. Debe cambiarse la credencial luego del primer ingreso al admin.
 
+Comportamiento del seed:
+
+- `database/seed.sql` es idempotente para el usuario bootstrap `admin`
+- `database/seed.sql` es idempotente para las novedades canonicas incluidas
+- el criterio usado para evitar duplicacion de novedades del seed es `titulo + fecha_publicacion`
+
 ## Validaciones minimas
 
 Se agregaron compuertas basicas para el frontend canonico:
 
 - `npm run validate:structure`: verifica que la raiz siga siendo la unica fuente canonica del frontend.
-- `npm run validate:database-bootstrap`: verifica que la fuente SQL canonica cubra el runtime real (`usuarios` + `novedades`).
+- `npm run validate:database-bootstrap`: verifica que la fuente SQL canonica cubra el runtime real (`usuarios` + `novedades`), que el hash bootstrap admin sea compatible con el backend y que el seed canonico sea idempotente.
 - `npm run validate:novedades-contract`: verifica el contrato canonico de `novedades` con checks de comportamiento sobre normalizacion y serializacion, ademas de revisar referencias legadas.
 - `npm run validate:repo-hygiene`: verifica que no haya secretos ni artefactos impropios versionados.
 - `npm run test:backend`: corre tests minimos utiles del backend con el runner nativo de Node.
@@ -92,6 +98,7 @@ Tests backend cubiertos hoy:
 - contrato canonico de `novedades`
 - serializacion publica de novedades
 - validacion y configuracion del formulario de contacto
+- bootstrap SQL de admin y novedades
 - smoke test de carga y respuestas base del backend
 
 ## Contrato canonico de novedades
