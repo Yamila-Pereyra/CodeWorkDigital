@@ -34,22 +34,7 @@ if (!rootPackage.scripts?.dev || !rootPackage.scripts?.build || !rootPackage.scr
 }
 
 if (existsSync(path.join(root, "front"))) {
-  if (!existsSync(path.join(root, "front", "LEGACY_FRONTEND.md"))) {
-    fail("front/ must include a legacy marker document");
-  }
-
-  const legacyPackage = readJson(path.join("front", "package.json"));
-
-  if (legacyPackage.name !== "legacy-front-archive") {
-    fail('front/package.json must be marked as "legacy-front-archive"');
-  }
-
-  ["dev", "build", "start"].forEach((scriptName) => {
-    const scriptValue = legacyPackage.scripts?.[scriptName] || "";
-    if (!scriptValue.includes("legacy-frontend-warning.mjs")) {
-      fail(`front/package.json script "${scriptName}" must be blocked with the legacy warning`);
-    }
-  });
+  fail("front/ must not exist; the root frontend is the only active frontend");
 }
 
 console.log("Frontend structure validation passed.");

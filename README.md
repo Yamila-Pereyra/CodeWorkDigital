@@ -11,8 +11,6 @@ Usar estas rutas como frontend activo:
 - `package.json`
 - `next.config.mjs`
 
-La carpeta `front/` queda archivada como frontend legado y no debe usarse para editar, ejecutar ni desplegar.
-
 ## Instalacion
 
 Desde la raiz del repositorio:
@@ -58,7 +56,7 @@ Luego completar localmente los valores sensibles.
 
 Se agregaron compuertas basicas para el frontend canonico:
 
-- `npm run validate:structure`: verifica que la raiz siga siendo la fuente canonica y que `front/` permanezca archivado.
+- `npm run validate:structure`: verifica que la raiz siga siendo la unica fuente canonica del frontend.
 - `npm run validate:novedades-contract`: verifica el contrato canonico de `novedades` con checks de comportamiento sobre normalizacion y serializacion, ademas de revisar referencias legadas.
 - `npm run validate:repo-hygiene`: verifica que no haya secretos ni artefactos impropios versionados.
 - `npm run test:backend`: corre tests minimos utiles del backend con el runner nativo de Node.
@@ -146,14 +144,3 @@ Accion manual posterior recomendada:
 
 - rotar cualquier secreto previamente expuesto en `back/.env`
 - evaluar limpieza del historial Git si esos secretos ya quedaron publicados en commits anteriores
-
-## Frontend legado
-
-`front/` se conserva solo como resguardo historico. No debe:
-
-- recibir cambios nuevos,
-- usarse para instalar dependencias activas,
-- usarse para `dev`, `build` o `start`,
-- tomarse como referencia de despliegue.
-
-Si hace falta revisar material previo, hacerlo solo como consulta y mover cualquier trabajo nuevo al frontend de la raiz.
