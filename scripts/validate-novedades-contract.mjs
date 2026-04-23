@@ -20,8 +20,13 @@ const checks = [
     forbidden: ["subtitulo", "cuerpo"],
   },
   {
-    file: "back/routes/api.js",
-    required: ["img_id", "imagen", "serializeApiNovedad"],
+    file: "back/services/novedadesService.js",
+    required: ["img_id", "serializeApiNovedad", "buildNovedadImageUrl", "listPublicNovedades"],
+    forbidden: ["subtitulo", "cuerpo"],
+  },
+  {
+    file: "back/controllers/apiController.js",
+    required: ["listPublicNovedades", "getNovedades"],
     forbidden: ["subtitulo", "cuerpo"],
   },
   {

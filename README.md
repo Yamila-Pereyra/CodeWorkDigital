@@ -89,6 +89,7 @@ Variables relevantes para hardening:
 - `SESSION_MAX_AGE_MS`: duracion de la sesion en milisegundos.
 - `TRUST_PROXY`: usar `true` si el backend corre detras de proxy y se necesita cookie `secure`.
 - `CORS_ALLOWED_ORIGINS`: lista separada por comas de origenes permitidos para `/api`.
+- `CONTACT_FORM_RECIPIENT`: destinatario configurado para los mensajes del formulario de contacto.
 
 Autenticacion:
 
