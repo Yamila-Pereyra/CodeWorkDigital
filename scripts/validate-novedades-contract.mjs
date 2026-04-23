@@ -33,7 +33,7 @@ function assertThrows(fn, expectedMessage) {
 
 const checks = [
   {
-    file: "back/novedades_schema.sql",
+    file: "database/schema.sql",
     required: ["titulo", "descripcion", "fecha_publicacion", "estado", "img_id", "link"],
     forbidden: ["subtitulo", "cuerpo"],
   },
