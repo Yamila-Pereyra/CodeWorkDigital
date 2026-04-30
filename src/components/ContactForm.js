@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AiOutlineSend } from "react-icons/ai";
+import { buildApiUrl } from "@/lib/apiConfig";
 
 export default function ContactForm({ postUr }) {
   const initialForm = { nombre: "", email: "", telefono: "", mensaje: "" };
@@ -20,7 +21,8 @@ export default function ContactForm({ postUr }) {
     setSending(true);
 
     try {
-      const rawResponse = await fetch(postUr, {
+      const submitUrl = postUr || buildApiUrl("/api/contacto");
+      const rawResponse = await fetch(submitUrl, {
         method: "POST",
         headers: {
           Accept: "application/json",

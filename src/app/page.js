@@ -146,9 +146,7 @@ export default function Home() {
         </div>
       </section>
 
-      <ContactForm
-        postUr={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contacto`}
-      />
+      <ContactForm />
     </main>
   );
 }

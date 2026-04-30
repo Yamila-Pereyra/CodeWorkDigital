@@ -80,19 +80,35 @@ const checks = [
   {
     file: "src/app/novedades/page.js",
     required: [
-      "NEXT_PUBLIC_API_BASE_URL",
+      "buildApiUrl",
       "response.ok",
       "descripcion",
       "fecha_publicacion",
       "imagen",
       "link",
+      "No pudimos cargar las novedades en este momento",
     ],
-    forbidden: ["cuerpo", "subtitulo"],
+    forbidden: ["cuerpo", "subtitulo", "process.env.NEXT_PUBLIC_API_BASE_URL"],
+  },
+  {
+    file: "src/lib/apiConfig.js",
+    required: [
+      "getApiBaseUrl",
+      "buildApiUrl",
+      "process.env.NEXT_PUBLIC_API_BASE_URL",
+      "NEXT_PUBLIC_API_BASE_URL is not configured",
+    ],
+    forbidden: [],
   },
   {
     file: "src/components/NovedadItem.js",
     required: ["formatPublishDate", 'split("-")', "${day}/${month}/${year}"],
     forbidden: ["new Date(publishDate)", "estado", "img_id"],
+  },
+  {
+    file: "src/components/ContactForm.js",
+    required: ["buildApiUrl", "/api/contacto"],
+    forbidden: ["process.env.NEXT_PUBLIC_API_BASE_URL"],
   },
 ];
 
@@ -110,6 +126,22 @@ for (const check of checks) {
       throw new Error(`${check.file} still references forbidden legacy token "${token}"`);
     }
   }
+}
+
+const frontendApiFiles = [
+  "src/app/novedades/page.js",
+  "src/app/contacto/page.js",
+  "src/app/page.js",
+  "src/components/ContactForm.js",
+];
+
+for (const file of frontendApiFiles) {
+  const content = readFileSync(path.join(root, file), "utf8");
+
+  assert(
+    !content.includes("process.env.NEXT_PUBLIC_API_BASE_URL"),
+    `${file} must use src/lib/apiConfig.js instead of reading NEXT_PUBLIC_API_BASE_URL directly`
+  );
 }
 
 assert(

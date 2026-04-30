@@ -17,9 +17,7 @@ export default function Contacto() {
             Contanos sobre tu proyecto y te respondemos a la brevedad.
           </p>
 
-          <ContactForm
-            postUr={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contacto`}
-          />
+          <ContactForm />
 
           <div className="whatsapp-contacto">
             <a
