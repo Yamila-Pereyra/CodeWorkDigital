@@ -111,11 +111,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="services">
+      <section className="home-services">
         <div className="container">
           <h2>Servicios</h2>
 
-          <div className="service-card">
+          <div className="home-service-card">
             <h3>Desarrollo Web Profesional</h3>
             <p>
               Sitios institucionales, landing pages y portfolios con diseño
@@ -123,12 +123,12 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="service-card">
+          <div className="home-service-card">
             <h3>Tiendas Online</h3>
             <p>E-commerce con WooCommerce o Shopify.</p>
           </div>
 
-          <div className="service-card">
+          <div className="home-service-card">
             <h3>Optimización & SEO Básico</h3>
             <p>Mejoras de velocidad, estructura y posicionamiento.</p>
           </div>

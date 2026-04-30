@@ -37,4 +37,31 @@ if (existsSync(path.join(root, "front"))) {
   fail("front/ must not exist; the root frontend is the only active frontend");
 }
 
+const homePage = readFileSync(path.join(root, "src/app/page.js"), "utf8");
+const homeStyles = readFileSync(path.join(root, "src/app/home1.css"), "utf8");
+
+if (homePage.includes('className="service-card"')) {
+  fail('home page must use home-specific service card classes instead of "service-card"');
+}
+
+[
+  'className="home-services"',
+  'className="home-service-card"',
+].forEach((token) => {
+  if (!homePage.includes(token)) {
+    fail(`home page is missing required token: ${token}`);
+  }
+});
+
+[
+  ".home-service-card h3",
+  ".home-service-card p",
+  ".home-service-card:hover h3",
+  ".home-service-card:hover p",
+].forEach((selector) => {
+  if (!homeStyles.includes(selector)) {
+    fail(`home styles are missing service card selector: ${selector}`);
+  }
+});
+
 console.log("Frontend structure validation passed.");
