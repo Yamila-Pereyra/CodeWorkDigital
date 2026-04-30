@@ -80,6 +80,11 @@ const checks = [
     ],
     forbidden: ["cuerpo", "subtitulo"],
   },
+  {
+    file: "src/components/NovedadItem.js",
+    required: ["formatPublishDate", 'split("-")', "${day}/${month}/${year}"],
+    forbidden: ["new Date(publishDate)", "estado", "img_id"],
+  },
 ];
 
 for (const check of checks) {
@@ -168,6 +173,49 @@ assert(
 assert(
   !Object.hasOwn(serializedNovedad, "estado"),
   "serializePublicNovedad must not expose estado"
+);
+
+function formatCanonicalDateForDisplay(value) {
+  if (typeof value !== "string") {
+    return "";
+  }
+
+  const parts = value.split("-");
+
+  if (parts.length !== 3) {
+    return "";
+  }
+
+  const [year, month, day] = parts;
+  const yearNumber = Number(year);
+  const monthNumber = Number(month);
+  const dayNumber = Number(day);
+
+  if (
+    !Number.isInteger(yearNumber) ||
+    !Number.isInteger(monthNumber) ||
+    !Number.isInteger(dayNumber) ||
+    year.length !== 4 ||
+    month.length !== 2 ||
+    day.length !== 2 ||
+    monthNumber < 1 ||
+    monthNumber > 12 ||
+    dayNumber < 1 ||
+    dayNumber > 31
+  ) {
+    return "";
+  }
+
+  return `${day}/${month}/${year}`;
+}
+
+assert(
+  formatCanonicalDateForDisplay("2026-04-23") === "23/04/2026",
+  "Public novedades date formatting must preserve the canonical calendar day"
+);
+assert(
+  formatCanonicalDateForDisplay(null) === "",
+  "Public novedades date formatting must tolerate null values"
 );
 
 assertThrows(
