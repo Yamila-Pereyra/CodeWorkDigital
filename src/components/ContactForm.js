@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AiOutlineSend } from "react-icons/ai";
 import { buildApiUrl } from "@/lib/apiConfig";
 
-export default function ContactForm({ postUr }) {
+export default function ContactForm({ postUrl }) {
   const initialForm = { nombre: "", email: "", telefono: "", mensaje: "" };
   const [formData, setFormData] = useState(initialForm);
   const [sending, setSending] = useState(false);
@@ -21,7 +21,7 @@ export default function ContactForm({ postUr }) {
     setSending(true);
 
     try {
-      const submitUrl = postUr || buildApiUrl("/api/contacto");
+      const submitUrl = postUrl || buildApiUrl("/api/contacto");
       const rawResponse = await fetch(submitUrl, {
         method: "POST",
         headers: {
