@@ -92,9 +92,13 @@ function buildNovedadInput(body) {
   return novedad;
 }
 
-function serializeApiNovedad(novedad, imagen) {
+function serializePublicNovedad(novedad, imagen) {
   return {
-    ...novedad,
+    id: novedad.id,
+    titulo: novedad.titulo,
+    descripcion: novedad.descripcion,
+    fecha_publicacion: novedad.fecha_publicacion,
+    link: novedad.link || null,
     imagen: imagen || null,
   };
 }
@@ -103,5 +107,5 @@ module.exports = {
   CANONICAL_NOVEDAD_FIELDS,
   buildNovedadInput,
   normalizeNovedadRow,
-  serializeApiNovedad,
+  serializePublicNovedad,
 };

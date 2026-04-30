@@ -2,7 +2,7 @@ var createError = require("http-errors");
 var novedadesModel = require("../models/novedadesModel");
 var {
   buildNovedadInput,
-  serializeApiNovedad,
+  serializePublicNovedad,
 } = require("../lib/novedadesContract");
 var { buildNovedadImageUrl } = require("../lib/cloudinaryClient");
 
@@ -13,9 +13,11 @@ async function listNovedades() {
 async function listPublicNovedades() {
   var novedades = await novedadesModel.getNovedades();
 
-  return novedades.map((novedad) =>
-    serializeApiNovedad(novedad, buildNovedadImageUrl(novedad.img_id))
-  );
+  return novedades
+    .filter((novedad) => novedad.estado === 1)
+    .map((novedad) =>
+      serializePublicNovedad(novedad, buildNovedadImageUrl(novedad.img_id))
+    );
 }
 
 async function getNovedadById(id) {

@@ -8,7 +8,7 @@ const {
   CANONICAL_NOVEDAD_FIELDS,
   buildNovedadInput,
   normalizeNovedadRow,
-  serializeApiNovedad,
+  serializePublicNovedad,
 } = require(path.join(root, "back/lib/novedadesContract.js"));
 
 function assert(condition, message) {
@@ -44,12 +44,23 @@ const checks = [
   },
   {
     file: "back/lib/novedadesContract.js",
-    required: ["CANONICAL_NOVEDAD_FIELDS", "buildNovedadInput", "normalizeNovedadRow"],
+    required: [
+      "CANONICAL_NOVEDAD_FIELDS",
+      "buildNovedadInput",
+      "normalizeNovedadRow",
+      "serializePublicNovedad",
+    ],
     forbidden: ["subtitulo", "cuerpo"],
   },
   {
     file: "back/services/novedadesService.js",
-    required: ["img_id", "serializeApiNovedad", "buildNovedadImageUrl", "listPublicNovedades"],
+    required: [
+      "img_id",
+      "estado === 1",
+      "serializePublicNovedad",
+      "buildNovedadImageUrl",
+      "listPublicNovedades",
+    ],
     forbidden: ["subtitulo", "cuerpo"],
   },
   {
@@ -59,7 +70,14 @@ const checks = [
   },
   {
     file: "src/app/novedades/page.js",
-    required: ["descripcion", "fecha_publicacion", "estado", "imagen", "link"],
+    required: [
+      "NEXT_PUBLIC_API_BASE_URL",
+      "response.ok",
+      "descripcion",
+      "fecha_publicacion",
+      "imagen",
+      "link",
+    ],
     forbidden: ["cuerpo", "subtitulo"],
   },
 ];
@@ -131,14 +149,25 @@ assert(normalizedRow.estado === 1, "normalizeNovedadRow must normalize boolean e
 assert(normalizedRow.img_id === null, "normalizeNovedadRow must normalize empty img_id");
 assert(normalizedRow.link === null, "normalizeNovedadRow must normalize empty link");
 
-const serializedNovedad = serializeApiNovedad(normalizedRow, "https://cdn.example.com/img");
+const serializedNovedad = serializePublicNovedad(
+  normalizedRow,
+  "https://cdn.example.com/img"
+);
 assert(
   serializedNovedad.imagen === "https://cdn.example.com/img",
-  "serializeApiNovedad must expose imagen"
+  "serializePublicNovedad must expose imagen"
 );
 assert(
   serializedNovedad.descripcion === "Descripcion",
-  "serializeApiNovedad must preserve canonical fields"
+  "serializePublicNovedad must expose descripcion"
+);
+assert(
+  !Object.hasOwn(serializedNovedad, "img_id"),
+  "serializePublicNovedad must not expose img_id"
+);
+assert(
+  !Object.hasOwn(serializedNovedad, "estado"),
+  "serializePublicNovedad must not expose estado"
 );
 
 assertThrows(

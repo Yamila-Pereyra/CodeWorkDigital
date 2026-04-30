@@ -19,6 +19,15 @@ test("listPublicNovedades serializa imagen pública desde img_id", async functio
             img_id: "news/cover",
             link: "https://example.com",
           },
+          {
+            id: 2,
+            titulo: "Prueba interna",
+            descripcion: "No debe aparecer publicamente",
+            fecha_publicacion: "2026-04-24",
+            estado: 0,
+            img_id: "news/internal",
+            link: null,
+          },
         ];
       },
     },
@@ -35,6 +44,9 @@ test("listPublicNovedades serializa imagen pública desde img_id", async functio
   assert.equal(novedades.length, 1);
   assert.equal(novedades[0].imagen, "https://cdn.example.com/news/cover");
   assert.equal(novedades[0].descripcion, "Descripcion");
+  assert.equal(novedades[0].titulo, "Titulo");
+  assert.equal(Object.hasOwn(novedades[0], "img_id"), false);
+  assert.equal(Object.hasOwn(novedades[0], "estado"), false);
 });
 
 test("getNovedadByIdOrThrow responde 404 cuando la novedad no existe", async function () {

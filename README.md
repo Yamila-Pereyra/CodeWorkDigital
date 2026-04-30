@@ -38,12 +38,25 @@ Frontend disponible en `http://localhost:3000`.
 
 ## Setup local sin secretos versionados
 
-- El frontend no requiere archivo `.env` en la raiz para el estado actual del repo.
+- El frontend debe configurarse creando `.env.local` en la raiz a partir de `.env.example`.
+- `NEXT_PUBLIC_API_BASE_URL` es configuracion publica del frontend, no un secreto. Por el prefijo `NEXT_PUBLIC_`, Next.js puede exponerla al navegador.
 - El backend debe configurarse creando `back/.env` a partir de `back/.env.example`.
-- `back/.env.example` es la plantilla versionada.
-- `back/.env` es local y no debe commitearse.
+- `.env.example` y `back/.env.example` son las plantillas versionadas.
+- `.env.local` y `back/.env` son locales y no deben commitearse.
 
-Flujo recomendado:
+Flujo recomendado para el frontend:
+
+```bash
+copy .env.example .env.local
+```
+
+El valor local esperado para desarrollo es:
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
+```
+
+Flujo recomendado para el backend:
 
 ```bash
 cd back
@@ -113,7 +126,16 @@ La forma canonica de `novedad` en el sistema es:
 - `img_id` opcional
 - `link` opcional
 
-La API publica tambien `imagen` como campo derivado desde `img_id`. Los campos legados `subtitulo` y `cuerpo` quedan fuera del contrato activo.
+La API publica de novedades devuelve solo novedades activas (`estado = 1`) y expone un DTO publico reducido:
+
+- `id`
+- `titulo`
+- `descripcion`
+- `fecha_publicacion`
+- `link`
+- `imagen`
+
+`imagen` es un campo derivado desde `img_id`. El DTO publico no expone `img_id` ni `estado`; esos campos quedan reservados para el contrato interno/admin. Los campos legados `subtitulo` y `cuerpo` quedan fuera del contrato activo.
 
 ## Backend y seguridad
 
