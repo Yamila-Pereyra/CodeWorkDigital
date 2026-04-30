@@ -1,5 +1,6 @@
 import "@/styles/novedades.css";
 import NovedadItem from "@/components/NovedadItem";
+import { buildApiUrl } from "@/lib/apiConfig";
 
 export const metadata = {
   title: "Code Work Digital",
@@ -9,15 +10,7 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 async function fetchNovedades() {
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-  if (!apiBaseUrl) {
-    throw new Error(
-      "Falta configurar NEXT_PUBLIC_API_BASE_URL en el .env.local de la raiz."
-    );
-  }
-
-  const response = await fetch(`${apiBaseUrl}/api/novedades`, {
+  const response = await fetch(buildApiUrl("/api/novedades"), {
     cache: "no-store",
   });
 
@@ -37,7 +30,9 @@ export default async function Novedades() {
   try {
     novedades = await fetchNovedades();
   } catch (error) {
-    errorMessage = error.message;
+    console.error("Error loading public novedades:", error);
+    errorMessage =
+      "No pudimos cargar las novedades en este momento. Intenta nuevamente mas tarde.";
   }
 
   return (
