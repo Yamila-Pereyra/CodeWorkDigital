@@ -4,7 +4,7 @@ var {
   CANONICAL_NOVEDAD_FIELDS,
   buildNovedadInput,
   normalizeNovedadRow,
-  serializeApiNovedad,
+  serializePublicNovedad,
 } = require("../lib/novedadesContract");
 
 test("CANONICAL_NOVEDAD_FIELDS mantiene el contrato esperado", function () {
@@ -75,8 +75,8 @@ test("normalizeNovedadRow normaliza filas de DB y campos opcionales vacios", fun
   });
 });
 
-test("serializeApiNovedad agrega imagen sin perder el contrato canónico", function () {
-  var serialized = serializeApiNovedad(
+test("serializePublicNovedad expone solo el DTO publico", function () {
+  var serialized = serializePublicNovedad(
     {
       id: 3,
       titulo: "Titulo",
@@ -92,4 +92,14 @@ test("serializeApiNovedad agrega imagen sin perder el contrato canónico", funct
   assert.equal(serialized.imagen, "https://cdn.example.com/image.jpg");
   assert.equal(serialized.titulo, "Titulo");
   assert.equal(serialized.descripcion, "Descripcion");
+  assert.deepEqual(Object.keys(serialized), [
+    "id",
+    "titulo",
+    "descripcion",
+    "fecha_publicacion",
+    "link",
+    "imagen",
+  ]);
+  assert.equal(Object.hasOwn(serialized, "img_id"), false);
+  assert.equal(Object.hasOwn(serialized, "estado"), false);
 });
