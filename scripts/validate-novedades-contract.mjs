@@ -39,7 +39,16 @@ const checks = [
   },
   {
     file: "back/models/novedadesModel.js",
-    required: ["descripcion", "fecha_publicacion", "estado", "img_id", "link"],
+    required: [
+      "getPublicNovedades",
+      "WHERE estado = 1",
+      "ORDER BY fecha_publicacion DESC, id DESC",
+      "descripcion",
+      "fecha_publicacion",
+      "estado",
+      "img_id",
+      "link",
+    ],
     forbidden: ["subtitulo", "cuerpo"],
   },
   {
@@ -55,13 +64,13 @@ const checks = [
   {
     file: "back/services/novedadesService.js",
     required: [
+      "getPublicNovedades",
       "img_id",
-      "estado === 1",
       "serializePublicNovedad",
       "buildNovedadImageUrl",
       "listPublicNovedades",
     ],
-    forbidden: ["subtitulo", "cuerpo"],
+    forbidden: ["subtitulo", "cuerpo", "estado === 1"],
   },
   {
     file: "back/controllers/apiController.js",

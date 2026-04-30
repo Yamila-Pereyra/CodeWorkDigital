@@ -11,6 +11,17 @@ async function getNovedades() {
   return rows.map(normalizeNovedadRow);
 }
 
+async function getPublicNovedades() {
+  var query = `
+    SELECT id, titulo, descripcion, fecha_publicacion, estado, img_id, link
+    FROM novedades
+    WHERE estado = 1
+    ORDER BY fecha_publicacion DESC, id DESC
+  `;
+  var rows = await pool.query(query);
+  return rows.map(normalizeNovedadRow);
+}
+
 async function insertNovedad(obj) {
   try {
     var query = "INSERT INTO novedades SET ?";
@@ -51,6 +62,7 @@ async function modificarNovedadById(obj, id) {
 
 module.exports = {
   getNovedades,
+  getPublicNovedades,
   insertNovedad,
   deleteNovedadesById,
   getNovedadById,

@@ -11,13 +11,11 @@ async function listNovedades() {
 }
 
 async function listPublicNovedades() {
-  var novedades = await novedadesModel.getNovedades();
+  var novedades = await novedadesModel.getPublicNovedades();
 
-  return novedades
-    .filter((novedad) => novedad.estado === 1)
-    .map((novedad) =>
-      serializePublicNovedad(novedad, buildNovedadImageUrl(novedad.img_id))
-    );
+  return novedades.map((novedad) =>
+    serializePublicNovedad(novedad, buildNovedadImageUrl(novedad.img_id))
+  );
 }
 
 async function getNovedadById(id) {

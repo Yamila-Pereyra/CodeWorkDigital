@@ -6,7 +6,7 @@ test("listPublicNovedades serializa imagen pública desde img_id", async functio
   var modelCalls = 0;
   var novedadesService = loadModuleWithMocks("services/novedadesService.js", {
     "../models/novedadesModel": {
-      getNovedades: async function () {
+      getPublicNovedades: async function () {
         modelCalls += 1;
 
         return [
@@ -18,15 +18,6 @@ test("listPublicNovedades serializa imagen pública desde img_id", async functio
             estado: 1,
             img_id: "news/cover",
             link: "https://example.com",
-          },
-          {
-            id: 2,
-            titulo: "Prueba interna",
-            descripcion: "No debe aparecer publicamente",
-            fecha_publicacion: "2026-04-24",
-            estado: 0,
-            img_id: "news/internal",
-            link: null,
           },
         ];
       },
