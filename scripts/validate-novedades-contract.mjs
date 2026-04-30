@@ -107,7 +107,7 @@ const checks = [
   },
   {
     file: "src/components/ContactForm.js",
-    required: ["buildApiUrl", "/api/contacto"],
+    required: ["postUrl", "buildApiUrl", "/api/contacto"],
     forbidden: ["process.env.NEXT_PUBLIC_API_BASE_URL"],
   },
 ];
@@ -143,6 +143,16 @@ for (const file of frontendApiFiles) {
     `${file} must use src/lib/apiConfig.js instead of reading NEXT_PUBLIC_API_BASE_URL directly`
   );
 }
+
+const contactFormContent = readFileSync(
+  path.join(root, "src/components/ContactForm.js"),
+  "utf8"
+);
+
+assert(
+  !/\bpostUr\b/.test(contactFormContent),
+  "ContactForm must use postUrl instead of the legacy postUr typo"
+);
 
 assert(
   Array.isArray(CANONICAL_NOVEDAD_FIELDS) &&
