@@ -9,7 +9,7 @@
   margin-bottom: 40px;
 }
 
-.cards-wrapper {
+.novedades-cards-wrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 60px;
@@ -58,7 +58,7 @@
 }
 
 @media screen and (max-width: 900px) {
-  .cards-wrapper {
+  .novedades-cards-wrapper {
     grid-template-columns: 1fr;
     width: 92%;
   }

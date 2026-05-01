@@ -46,7 +46,7 @@
   box-shadow: 0 8px 20px rgba(255, 107, 107, 0.25);
 }
 
-.cards-wrapper {
+.servicios-cards-wrapper {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
@@ -150,13 +150,13 @@
 }
 
 @media (max-width: 1024px) {
-  .cards-wrapper {
+  .servicios-cards-wrapper {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .cards-wrapper {
+  .servicios-cards-wrapper {
     grid-template-columns: 1fr;
   }
 }
