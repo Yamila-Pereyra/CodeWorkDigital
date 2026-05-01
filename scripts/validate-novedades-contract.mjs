@@ -31,6 +31,56 @@ function assertThrows(fn, expectedMessage) {
   throw new Error(`Expected function to throw: ${expectedMessage || "unknown error"}`);
 }
 
+const apiConfigSource = readFileSync(path.join(root, "src/lib/apiConfig.js"), "utf8");
+const apiConfigModule = await import(
+  `data:text/javascript;charset=utf-8,${encodeURIComponent(apiConfigSource)}`
+);
+const originalApiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+function withApiBaseUrl(value, fn) {
+  if (value === undefined) {
+    delete process.env.NEXT_PUBLIC_API_BASE_URL;
+  } else {
+    process.env.NEXT_PUBLIC_API_BASE_URL = value;
+  }
+
+  try {
+    fn();
+  } finally {
+    if (originalApiBaseUrl === undefined) {
+      delete process.env.NEXT_PUBLIC_API_BASE_URL;
+    } else {
+      process.env.NEXT_PUBLIC_API_BASE_URL = originalApiBaseUrl;
+    }
+  }
+}
+
+function assertApiBaseUrl(value, expectedBaseUrl) {
+  withApiBaseUrl(value, () => {
+    assert(
+      apiConfigModule.getApiBaseUrl() === expectedBaseUrl,
+      `getApiBaseUrl must normalize ${String(value)} to ${expectedBaseUrl}`
+    );
+    assert(
+      apiConfigModule.buildApiUrl("/api/novedades") === `${expectedBaseUrl}/api/novedades`,
+      `buildApiUrl must build novedades URL from ${expectedBaseUrl}`
+    );
+  });
+}
+
+function assertInvalidApiBaseUrl(value) {
+  withApiBaseUrl(value, () => {
+    assertThrows(
+      () => apiConfigModule.getApiBaseUrl(),
+      "NEXT_PUBLIC_API_BASE_URL must be configured with an absolute HTTP/HTTPS URL"
+    );
+    assertThrows(
+      () => apiConfigModule.buildApiUrl("/api/novedades"),
+      "NEXT_PUBLIC_API_BASE_URL must be configured with an absolute HTTP/HTTPS URL"
+    );
+  });
+}
+
 const checks = [
   {
     file: "database/schema.sql",
@@ -96,7 +146,8 @@ const checks = [
       "getApiBaseUrl",
       "buildApiUrl",
       "process.env.NEXT_PUBLIC_API_BASE_URL",
-      "NEXT_PUBLIC_API_BASE_URL is not configured",
+      "NEXT_PUBLIC_API_BASE_URL must be configured with an absolute HTTP/HTTPS URL",
+      "new URL",
     ],
     forbidden: [],
   },
@@ -279,5 +330,15 @@ assertThrows(
     }),
   "required canonical fields"
 );
+
+assertApiBaseUrl("http://localhost:3001", "http://localhost:3001");
+assertApiBaseUrl("http://localhost:3001/", "http://localhost:3001");
+
+assertInvalidApiBaseUrl(undefined);
+assertInvalidApiBaseUrl("");
+assertInvalidApiBaseUrl("undefined");
+assertInvalidApiBaseUrl("null");
+assertInvalidApiBaseUrl("/api");
+assertInvalidApiBaseUrl("ftp://localhost:3001");
 
 console.log("Novedades contract validation passed.");
