@@ -38,7 +38,7 @@ export default async function Novedades() {
   return (
     <section className="novedades-container">
       <h1>Nuestras Novedades</h1>
-      <div className="cards-wrapper">
+      <div className="novedades-cards-wrapper">
         {errorMessage ? (
           <p>{errorMessage}</p>
         ) : novedades && novedades.length > 0 ? (

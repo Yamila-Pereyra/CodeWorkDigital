@@ -39,6 +39,10 @@ if (existsSync(path.join(root, "front"))) {
 
 const homePage = readFileSync(path.join(root, "src/app/page.js"), "utf8");
 const homeStyles = readFileSync(path.join(root, "src/app/home1.css"), "utf8");
+const serviciosPage = readFileSync(path.join(root, "src/app/servicios/page.js"), "utf8");
+const serviciosStyles = readFileSync(path.join(root, "src/styles/servicios.css"), "utf8");
+const novedadesPage = readFileSync(path.join(root, "src/app/novedades/page.js"), "utf8");
+const novedadesStyles = readFileSync(path.join(root, "src/styles/novedades.css"), "utf8");
 
 if (homePage.includes('className="service-card"')) {
   fail('home page must use home-specific service card classes instead of "service-card"');
@@ -61,6 +65,32 @@ if (homePage.includes('className="service-card"')) {
 ].forEach((selector) => {
   if (!homeStyles.includes(selector)) {
     fail(`home styles are missing service card selector: ${selector}`);
+  }
+});
+
+[
+  ["servicios page", serviciosPage, 'className="servicios-cards-wrapper"'],
+  ["novedades page", novedadesPage, 'className="novedades-cards-wrapper"'],
+].forEach(([label, content, requiredToken]) => {
+  if (content.includes('className="cards-wrapper"')) {
+    fail(`${label} must use a page-specific cards wrapper instead of "cards-wrapper"`);
+  }
+
+  if (!content.includes(requiredToken)) {
+    fail(`${label} is missing required token: ${requiredToken}`);
+  }
+});
+
+[
+  ["servicios styles", serviciosStyles, ".servicios-cards-wrapper"],
+  ["novedades styles", novedadesStyles, ".novedades-cards-wrapper"],
+].forEach(([label, content, requiredSelector]) => {
+  if (content.includes(".cards-wrapper")) {
+    fail(`${label} must not define generic .cards-wrapper`);
+  }
+
+  if (!content.includes(requiredSelector)) {
+    fail(`${label} is missing required selector: ${requiredSelector}`);
   }
 });
 

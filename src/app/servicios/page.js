@@ -35,7 +35,7 @@ export default function Servicios() {
         <div className="container">
           <h2 className="titulo-servicios">Servicios</h2>
 
-          <div className="cards-wrapper">
+          <div className="servicios-cards-wrapper">
             <div className="service-card">
               <FaLaptopCode className="card-icon" />
               <h3>Desarrollo Web Profesional</h3>
