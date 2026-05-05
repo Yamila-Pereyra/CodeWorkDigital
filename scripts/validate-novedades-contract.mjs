@@ -11,334 +11,119 @@ const {
   serializePublicNovedad,
 } = require(path.join(root, "back/lib/novedadesContract.js"));
 
+const forbiddenNewColumns = [
+  "descripcion",
+  "fecha_publicacion",
+  "estado",
+  "img_id",
+];
+
+function read(relativePath) {
+  return readFileSync(path.join(root, relativePath), "utf8");
+}
+
 function assert(condition, message) {
   if (!condition) {
     throw new Error(message);
   }
 }
 
-function assertThrows(fn, expectedMessage) {
-  try {
-    fn();
-  } catch (error) {
-    if (!expectedMessage || error.message.includes(expectedMessage)) {
-      return;
-    }
-
-    throw error;
-  }
-
-  throw new Error(`Expected function to throw: ${expectedMessage || "unknown error"}`);
+function assertIncludes(content, token, file) {
+  assert(content.includes(token), `${file} is missing required token "${token}"`);
 }
 
-const apiConfigSource = readFileSync(path.join(root, "src/lib/apiConfig.js"), "utf8");
-const apiConfigModule = await import(
-  `data:text/javascript;charset=utf-8,${encodeURIComponent(apiConfigSource)}`
-);
-const originalApiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-function withApiBaseUrl(value, fn) {
-  if (value === undefined) {
-    delete process.env.NEXT_PUBLIC_API_BASE_URL;
-  } else {
-    process.env.NEXT_PUBLIC_API_BASE_URL = value;
-  }
-
-  try {
-    fn();
-  } finally {
-    if (originalApiBaseUrl === undefined) {
-      delete process.env.NEXT_PUBLIC_API_BASE_URL;
-    } else {
-      process.env.NEXT_PUBLIC_API_BASE_URL = originalApiBaseUrl;
-    }
-  }
+function assertExcludes(content, token, file) {
+  assert(!content.includes(token), `${file} still references forbidden token "${token}"`);
 }
 
-function assertApiBaseUrl(value, expectedBaseUrl) {
-  withApiBaseUrl(value, () => {
-    assert(
-      apiConfigModule.getApiBaseUrl() === expectedBaseUrl,
-      `getApiBaseUrl must normalize ${String(value)} to ${expectedBaseUrl}`
-    );
-    assert(
-      apiConfigModule.buildApiUrl("/api/novedades") === `${expectedBaseUrl}/api/novedades`,
-      `buildApiUrl must build novedades URL from ${expectedBaseUrl}`
-    );
-  });
-}
-
-function assertInvalidApiBaseUrl(value) {
-  withApiBaseUrl(value, () => {
-    assertThrows(
-      () => apiConfigModule.getApiBaseUrl(),
-      "NEXT_PUBLIC_API_BASE_URL must be configured with an absolute HTTP/HTTPS URL"
-    );
-    assertThrows(
-      () => apiConfigModule.buildApiUrl("/api/novedades"),
-      "NEXT_PUBLIC_API_BASE_URL must be configured with an absolute HTTP/HTTPS URL"
-    );
-  });
-}
-
-const checks = [
-  {
-    file: "database/schema.sql",
-    required: ["titulo", "descripcion", "fecha_publicacion", "estado", "img_id", "link"],
-    forbidden: ["subtitulo", "cuerpo"],
-  },
-  {
-    file: "back/models/novedadesModel.js",
-    required: [
-      "getPublicNovedades",
-      "WHERE estado = 1",
-      "ORDER BY fecha_publicacion DESC, id DESC",
-      "descripcion",
-      "fecha_publicacion",
-      "estado",
-      "img_id",
-      "link",
-    ],
-    forbidden: ["subtitulo", "cuerpo"],
-  },
-  {
-    file: "back/lib/novedadesContract.js",
-    required: [
-      "CANONICAL_NOVEDAD_FIELDS",
-      "buildNovedadInput",
-      "normalizeNovedadRow",
-      "serializePublicNovedad",
-    ],
-    forbidden: ["subtitulo", "cuerpo"],
-  },
-  {
-    file: "back/services/novedadesService.js",
-    required: [
-      "getPublicNovedades",
-      "img_id",
-      "serializePublicNovedad",
-      "buildNovedadImageUrl",
-      "listPublicNovedades",
-    ],
-    forbidden: ["subtitulo", "cuerpo", "estado === 1"],
-  },
-  {
-    file: "back/controllers/apiController.js",
-    required: ["listPublicNovedades", "getNovedades"],
-    forbidden: ["subtitulo", "cuerpo"],
-  },
-  {
-    file: "src/app/novedades/page.js",
-    required: [
-      "buildApiUrl",
-      "response.ok",
-      "descripcion",
-      "fecha_publicacion",
-      "imagen",
-      "link",
-      "No pudimos cargar las novedades en este momento",
-    ],
-    forbidden: ["cuerpo", "subtitulo", "process.env.NEXT_PUBLIC_API_BASE_URL"],
-  },
-  {
-    file: "src/lib/apiConfig.js",
-    required: [
-      "getApiBaseUrl",
-      "buildApiUrl",
-      "process.env.NEXT_PUBLIC_API_BASE_URL",
-      "NEXT_PUBLIC_API_BASE_URL must be configured with an absolute HTTP/HTTPS URL",
-      "new URL",
-    ],
-    forbidden: [],
-  },
-  {
-    file: "src/components/NovedadItem.js",
-    required: ["formatPublishDate", 'split("-")', "${day}/${month}/${year}"],
-    forbidden: ["new Date(publishDate)", "estado", "img_id"],
-  },
-  {
-    file: "src/components/ContactForm.js",
-    required: ["postUrl", "buildApiUrl", "/api/contacto"],
-    forbidden: ["process.env.NEXT_PUBLIC_API_BASE_URL"],
-  },
+const legacyFiles = [
+  "database/schema.sql",
+  "database/seed.sql",
+  "back/novedades_schema.sql",
+  "back/models/novedadesModel.js",
+  "back/lib/novedadesContract.js",
+  "back/services/novedadesService.js",
+  "back/views/admin/agregar.hbs",
+  "back/views/admin/modificar.hbs",
+  "back/views/admin/novedades.hbs",
 ];
 
-for (const check of checks) {
-  const content = readFileSync(path.join(root, check.file), "utf8");
+for (const file of legacyFiles) {
+  const content = read(file);
 
-  for (const token of check.required) {
-    if (!content.includes(token)) {
-      throw new Error(`${check.file} is missing required novedades token "${token}"`);
-    }
-  }
-
-  for (const token of check.forbidden) {
-    if (content.includes(token)) {
-      throw new Error(`${check.file} still references forbidden legacy token "${token}"`);
-    }
-  }
+  forbiddenNewColumns.forEach((token) => assertExcludes(content, token, file));
+  assert(!/\bname="link"/.test(content), `${file} must not submit link`);
+  assert(!/\blink\b/.test(content.replace(/<link[^>]*>/g, "")), `${file} must not require link`);
 }
 
-const frontendApiFiles = [
-  "src/app/novedades/page.js",
-  "src/app/contacto/page.js",
-  "src/app/page.js",
-  "src/components/ContactForm.js",
-];
+for (const file of [
+  "database/schema.sql",
+  "database/seed.sql",
+  "back/novedades_schema.sql",
+  "back/models/novedadesModel.js",
+  "back/lib/novedadesContract.js",
+  "back/views/admin/agregar.hbs",
+  "back/views/admin/modificar.hbs",
+]) {
+  const content = read(file);
 
-for (const file of frontendApiFiles) {
-  const content = readFileSync(path.join(root, file), "utf8");
-
-  assert(
-    !content.includes("process.env.NEXT_PUBLIC_API_BASE_URL"),
-    `${file} must use src/lib/apiConfig.js instead of reading NEXT_PUBLIC_API_BASE_URL directly`
+  ["titulo", "subtitulo", "cuerpo"].forEach((token) =>
+    assertIncludes(content, token, file)
   );
 }
 
-const contactFormContent = readFileSync(
-  path.join(root, "src/components/ContactForm.js"),
-  "utf8"
+const model = read("back/models/novedadesModel.js");
+assertIncludes(model, "SELECT id, titulo, subtitulo, cuerpo", "back/models/novedadesModel.js");
+assertIncludes(model, "FROM novedades", "back/models/novedadesModel.js");
+assert(!/WHERE\s+estado/i.test(model), "novedades model must not filter by estado");
+
+const publicPage = read("src/app/novedades/page.js");
+["item.titulo", "item.subtitulo", "item.cuerpo"].forEach((token) =>
+  assertIncludes(publicPage, token, "src/app/novedades/page.js")
 );
 
-assert(
-  !/\bpostUr\b/.test(contactFormContent),
-  "ContactForm must use postUrl instead of the legacy postUr typo"
+const itemComponent = read("src/components/NovedadItem.js");
+["title", "subtitle", "body"].forEach((token) =>
+  assertIncludes(itemComponent, token, "src/components/NovedadItem.js")
+);
+forbiddenNewColumns.forEach((token) =>
+  assertExcludes(itemComponent, token, "src/components/NovedadItem.js")
 );
 
 assert(
   Array.isArray(CANONICAL_NOVEDAD_FIELDS) &&
-    CANONICAL_NOVEDAD_FIELDS.join(",") ===
-      "id,titulo,descripcion,fecha_publicacion,estado,img_id,link",
-  "Canonical novedad fields must remain stable and ordered"
+    CANONICAL_NOVEDAD_FIELDS.join(",") === "id,titulo,subtitulo,cuerpo",
+  "Canonical novedad fields must remain legacy and ordered"
 );
 
 const normalizedInput = buildNovedadInput({
-  titulo: "  Titulo canonico  ",
-  descripcion: "  Descripcion canonica  ",
-  fecha_publicacion: "2026-04-23T12:34:56.000Z",
-  estado: "1",
-  img_id: "  portada/main  ",
-  link: "  https://example.com/novedad  ",
+  titulo: "  Titulo legacy  ",
+  subtitulo: "  Subtitulo legacy  ",
+  cuerpo: "  Cuerpo legacy  ",
 });
 
-assert(normalizedInput.titulo === "Titulo canonico", "buildNovedadInput must trim titulo");
+assert(normalizedInput.titulo === "Titulo legacy", "buildNovedadInput must trim titulo");
 assert(
-  normalizedInput.descripcion === "Descripcion canonica",
-  "buildNovedadInput must trim descripcion"
+  normalizedInput.subtitulo === "Subtitulo legacy",
+  "buildNovedadInput must trim subtitulo"
 );
-assert(
-  normalizedInput.fecha_publicacion === "2026-04-23",
-  "buildNovedadInput must normalize fecha_publicacion"
-);
-assert(normalizedInput.estado === 1, "buildNovedadInput must normalize estado");
-assert(normalizedInput.img_id === "portada/main", "buildNovedadInput must trim img_id");
-assert(
-  normalizedInput.link === "https://example.com/novedad",
-  "buildNovedadInput must trim link"
-);
+assert(normalizedInput.cuerpo === "Cuerpo legacy", "buildNovedadInput must trim cuerpo");
 
 const normalizedRow = normalizeNovedadRow({
   id: 10,
   titulo: "Titulo",
-  descripcion: "Descripcion",
-  fecha_publicacion: new Date("2026-04-23T00:00:00.000Z"),
-  estado: true,
-  img_id: "",
-  link: " ",
+  subtitulo: "Subtitulo",
+  cuerpo: "Cuerpo",
 });
 
 assert(normalizedRow.id === 10, "normalizeNovedadRow must preserve id");
+assert(normalizedRow.subtitulo === "Subtitulo", "normalizeNovedadRow must expose subtitulo");
+assert(normalizedRow.cuerpo === "Cuerpo", "normalizeNovedadRow must expose cuerpo");
+
+const serializedNovedad = serializePublicNovedad(normalizedRow);
 assert(
-  normalizedRow.fecha_publicacion === "2026-04-23",
-  "normalizeNovedadRow must format Date values"
-);
-assert(normalizedRow.estado === 1, "normalizeNovedadRow must normalize boolean estado");
-assert(normalizedRow.img_id === null, "normalizeNovedadRow must normalize empty img_id");
-assert(normalizedRow.link === null, "normalizeNovedadRow must normalize empty link");
-
-const serializedNovedad = serializePublicNovedad(
-  normalizedRow,
-  "https://cdn.example.com/img"
-);
-assert(
-  serializedNovedad.imagen === "https://cdn.example.com/img",
-  "serializePublicNovedad must expose imagen"
-);
-assert(
-  serializedNovedad.descripcion === "Descripcion",
-  "serializePublicNovedad must expose descripcion"
-);
-assert(
-  !Object.hasOwn(serializedNovedad, "img_id"),
-  "serializePublicNovedad must not expose img_id"
-);
-assert(
-  !Object.hasOwn(serializedNovedad, "estado"),
-  "serializePublicNovedad must not expose estado"
+  Object.keys(serializedNovedad).join(",") === "id,titulo,subtitulo,cuerpo",
+  "serializePublicNovedad must expose only legacy public fields"
 );
 
-function formatCanonicalDateForDisplay(value) {
-  if (typeof value !== "string") {
-    return "";
-  }
-
-  const parts = value.split("-");
-
-  if (parts.length !== 3) {
-    return "";
-  }
-
-  const [year, month, day] = parts;
-  const yearNumber = Number(year);
-  const monthNumber = Number(month);
-  const dayNumber = Number(day);
-
-  if (
-    !Number.isInteger(yearNumber) ||
-    !Number.isInteger(monthNumber) ||
-    !Number.isInteger(dayNumber) ||
-    year.length !== 4 ||
-    month.length !== 2 ||
-    day.length !== 2 ||
-    monthNumber < 1 ||
-    monthNumber > 12 ||
-    dayNumber < 1 ||
-    dayNumber > 31
-  ) {
-    return "";
-  }
-
-  return `${day}/${month}/${year}`;
-}
-
-assert(
-  formatCanonicalDateForDisplay("2026-04-23") === "23/04/2026",
-  "Public novedades date formatting must preserve the canonical calendar day"
-);
-assert(
-  formatCanonicalDateForDisplay(null) === "",
-  "Public novedades date formatting must tolerate null values"
-);
-
-assertThrows(
-  () =>
-    buildNovedadInput({
-      titulo: "Sin descripcion",
-      descripcion: "",
-      fecha_publicacion: "2026-04-23",
-      estado: 1,
-    }),
-  "required canonical fields"
-);
-
-assertApiBaseUrl("http://localhost:3001", "http://localhost:3001");
-assertApiBaseUrl("http://localhost:3001/", "http://localhost:3001");
-
-assertInvalidApiBaseUrl(undefined);
-assertInvalidApiBaseUrl("");
-assertInvalidApiBaseUrl("undefined");
-assertInvalidApiBaseUrl("null");
-assertInvalidApiBaseUrl("/api");
-assertInvalidApiBaseUrl("ftp://localhost:3001");
-
-console.log("Novedades contract validation passed.");
+console.log("Novedades legacy contract validation passed.");

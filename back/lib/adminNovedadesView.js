@@ -1,12 +1,5 @@
 function buildAdminViewNovedad(novedad) {
-  var estado = novedad && (novedad.estado === 0 || novedad.estado === "0") ? 0 : 1;
-
-  return {
-    ...novedad,
-    estado,
-    estado_activo: estado === 1,
-    estado_inactivo: estado === 0,
-  };
+  return novedad || {};
 }
 
 function buildNovedadesListViewModel(usuario, novedades, error, message) {

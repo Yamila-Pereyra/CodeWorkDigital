@@ -3,23 +3,15 @@ var { normalizeNovedadRow } = require("../lib/novedadesContract");
 
 async function getNovedades() {
   var query = `
-    SELECT id, titulo, descripcion, fecha_publicacion, estado, img_id, link
+    SELECT id, titulo, subtitulo, cuerpo
     FROM novedades
-    ORDER BY fecha_publicacion DESC, id DESC
   `;
   var rows = await pool.query(query);
   return rows.map(normalizeNovedadRow);
 }
 
 async function getPublicNovedades() {
-  var query = `
-    SELECT id, titulo, descripcion, fecha_publicacion, estado, img_id, link
-    FROM novedades
-    WHERE estado = 1
-    ORDER BY fecha_publicacion DESC, id DESC
-  `;
-  var rows = await pool.query(query);
-  return rows.map(normalizeNovedadRow);
+  return getNovedades();
 }
 
 async function insertNovedad(obj) {
@@ -41,7 +33,7 @@ async function deleteNovedadesById(id) {
 
 async function getNovedadById(id) {
   var query = `
-    SELECT id, titulo, descripcion, fecha_publicacion, estado, img_id, link
+    SELECT id, titulo, subtitulo, cuerpo
     FROM novedades
     WHERE id = ?
   `;

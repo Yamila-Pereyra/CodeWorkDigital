@@ -2,7 +2,7 @@ var test = require("node:test");
 var assert = require("node:assert/strict");
 var { loadModuleWithMocks } = require("../test-support/loadModuleWithMocks");
 
-test("listPublicNovedades serializa imagen pública desde img_id", async function () {
+test("listPublicNovedades devuelve el contrato publico legacy", async function () {
   var modelCalls = 0;
   var novedadesService = loadModuleWithMocks("services/novedadesService.js", {
     "../models/novedadesModel": {
@@ -13,18 +13,10 @@ test("listPublicNovedades serializa imagen pública desde img_id", async functio
           {
             id: 1,
             titulo: "Titulo",
-            descripcion: "Descripcion",
-            fecha_publicacion: "2026-04-23",
-            estado: 1,
-            img_id: "news/cover",
-            link: "https://example.com",
+            subtitulo: "Subtitulo",
+            cuerpo: "Cuerpo",
           },
         ];
-      },
-    },
-    "../lib/cloudinaryClient": {
-      buildNovedadImageUrl: function (imgId) {
-        return "https://cdn.example.com/" + imgId;
       },
     },
   });
@@ -32,23 +24,20 @@ test("listPublicNovedades serializa imagen pública desde img_id", async functio
   var novedades = await novedadesService.listPublicNovedades();
 
   assert.equal(modelCalls, 1);
-  assert.equal(novedades.length, 1);
-  assert.equal(novedades[0].imagen, "https://cdn.example.com/news/cover");
-  assert.equal(novedades[0].descripcion, "Descripcion");
-  assert.equal(novedades[0].titulo, "Titulo");
-  assert.equal(Object.hasOwn(novedades[0], "img_id"), false);
-  assert.equal(Object.hasOwn(novedades[0], "estado"), false);
+  assert.deepEqual(novedades, [
+    {
+      id: 1,
+      titulo: "Titulo",
+      subtitulo: "Subtitulo",
+      cuerpo: "Cuerpo",
+    },
+  ]);
 });
 
 test("getNovedadByIdOrThrow responde 404 cuando la novedad no existe", async function () {
   var novedadesService = loadModuleWithMocks("services/novedadesService.js", {
     "../models/novedadesModel": {
       getNovedadById: async function () {
-        return null;
-      },
-    },
-    "../lib/cloudinaryClient": {
-      buildNovedadImageUrl: function () {
         return null;
       },
     },
@@ -66,7 +55,7 @@ test("getNovedadByIdOrThrow responde 404 cuando la novedad no existe", async fun
   );
 });
 
-test("createNovedad normaliza antes de persistir", async function () {
+test("createNovedad normaliza el payload legacy antes de persistir", async function () {
   var insertedPayload = null;
   var novedadesService = loadModuleWithMocks("services/novedadesService.js", {
     "../models/novedadesModel": {
@@ -74,28 +63,17 @@ test("createNovedad normaliza antes de persistir", async function () {
         insertedPayload = payload;
       },
     },
-    "../lib/cloudinaryClient": {
-      buildNovedadImageUrl: function () {
-        return null;
-      },
-    },
   });
 
   await novedadesService.createNovedad({
     titulo: "  Titulo  ",
-    descripcion: "  Descripcion  ",
-    fecha_publicacion: "2026-04-23T00:00:00.000Z",
-    estado: "1",
-    img_id: "",
-    link: "  ",
+    subtitulo: "  Subtitulo  ",
+    cuerpo: "  Cuerpo  ",
   });
 
   assert.deepEqual(insertedPayload, {
     titulo: "Titulo",
-    descripcion: "Descripcion",
-    fecha_publicacion: "2026-04-23",
-    estado: 1,
-    img_id: null,
-    link: null,
+    subtitulo: "Subtitulo",
+    cuerpo: "Cuerpo",
   });
 });

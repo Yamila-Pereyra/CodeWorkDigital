@@ -10,23 +10,11 @@
     <label>Titulo:</label>
     <input type="text" name="titulo" value="{{novedad.titulo}}" required>
 
-    <label>Descripcion:</label>
-    <textarea name="descripcion" required>{{novedad.descripcion}}</textarea>
+    <label>Subtitulo:</label>
+    <textarea name="subtitulo" required>{{novedad.subtitulo}}</textarea>
 
-    <label>Fecha de Publicacion:</label>
-    <input type="date" name="fecha_publicacion" value="{{novedad.fecha_publicacion}}" required>
-
-    <label>Estado:</label>
-    <select name="estado" required>
-        <option value="1" {{#if novedad.estado_activo}}selected{{/if}}>Activo</option>
-        <option value="0" {{#if novedad.estado_inactivo}}selected{{/if}}>Inactivo</option>
-    </select>
-
-    <label>Link (opcional):</label>
-    <input type="url" name="link" value="{{novedad.link}}">
-
-    <label>Cloudinary img_id (opcional):</label>
-    <input type="text" name="img_id" value="{{novedad.img_id}}">
+    <label>Cuerpo:</label>
+    <textarea name="cuerpo" required>{{novedad.cuerpo}}</textarea>
 
     <button type="submit">Agregar</button>
 </form>
