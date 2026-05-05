@@ -31,12 +31,7 @@ async function list(req, res) {
 }
 
 function showAddForm(req, res) {
-  res.render(
-    "admin/agregar",
-    buildNovedadFormViewModel({
-      estado: 1,
-    })
-  );
+  res.render("admin/agregar", buildNovedadFormViewModel({}));
 }
 
 async function create(req, res) {
@@ -50,7 +45,7 @@ async function create(req, res) {
       buildNovedadFormViewModel(
         req.body,
         true,
-        "No se cargo la novedad. Revisa titulo, descripcion, fecha y estado."
+        "No se cargo la novedad. Revisa titulo, subtitulo y cuerpo."
       )
     );
   }
@@ -92,7 +87,7 @@ async function update(req, res) {
       buildNovedadFormViewModel(
         req.body,
         true,
-        "No se modifico la novedad. Revisa titulo, descripcion, fecha y estado."
+        "No se modifico la novedad. Revisa titulo, subtitulo y cuerpo."
       )
     );
   }

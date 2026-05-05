@@ -4,7 +4,6 @@ var {
   buildNovedadInput,
   serializePublicNovedad,
 } = require("../lib/novedadesContract");
-var { buildNovedadImageUrl } = require("../lib/cloudinaryClient");
 
 async function listNovedades() {
   return novedadesModel.getNovedades();
@@ -13,9 +12,7 @@ async function listNovedades() {
 async function listPublicNovedades() {
   var novedades = await novedadesModel.getPublicNovedades();
 
-  return novedades.map((novedad) =>
-    serializePublicNovedad(novedad, buildNovedadImageUrl(novedad.img_id))
-  );
+  return novedades.map(serializePublicNovedad);
 }
 
 async function getNovedadById(id) {

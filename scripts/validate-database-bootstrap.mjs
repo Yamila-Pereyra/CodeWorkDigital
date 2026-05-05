@@ -43,7 +43,7 @@ const seed = read(seedFile);
   "scrypt$",
   "WHERE NOT EXISTS",
   "INSERT INTO novedades",
-  "Idempotence criteria: titulo + fecha_publicacion",
+  "Idempotence criteria: titulo",
 ].forEach((token) => assertIncludes(seed, token, seedFile));
 
 const adminHashMatch = seed.match(/'scrypt\$[^']+'/);
@@ -67,12 +67,16 @@ assert(
 );
 
 [
-  ["Tendencias diseno web 2026: claves para adelantarte al futuro", "2026-01-15"],
-  ["10 elementos de una pagina web de exito", "2026-02-10"],
-  ["Prueba interna", "2026-03-01"],
-].forEach(([titulo, fecha]) => {
+  "Tendencias diseno web 2026: claves para adelantarte al futuro",
+  "10 elementos de una pagina web de exito",
+  "Prueba interna",
+].forEach((titulo) => {
   assertIncludes(seed, `WHERE titulo = '${titulo}'`, seedFile);
-  assertIncludes(seed, `AND fecha_publicacion = '${fecha}'`, seedFile);
+});
+
+["descripcion", "fecha_publicacion", "estado", "img_id", "link"].forEach((token) => {
+  assert(!schema.includes(token), `${schemaFile} must not require ${token}`);
+  assert(!seed.includes(token), `${seedFile} must not require ${token}`);
 });
 
 console.log("Database bootstrap validation passed.");
