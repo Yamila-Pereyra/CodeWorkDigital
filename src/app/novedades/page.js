@@ -1,6 +1,5 @@
 import "@/styles/novedades.css";
 import NovedadItem from "@/components/NovedadItem";
-import { buildApiUrl } from "@/lib/apiConfig";
 
 export const metadata = {
   title: "Code Work Digital",
@@ -10,7 +9,7 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 async function fetchNovedades() {
-  const response = await fetch(buildApiUrl("/api/novedades"), {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/novedades`, {
     cache: "no-store",
   });
 

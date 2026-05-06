@@ -1,22 +1,9 @@
 var createError = require("http-errors");
 var { sendMail } = require("../lib/mailer");
 
-function getContactRecipient() {
-  var recipient = process.env.CONTACT_FORM_RECIPIENT;
-
-  if (!recipient) {
-    throw createError(
-      500,
-      "CONTACT_FORM_RECIPIENT no esta configurado para el formulario de contacto"
-    );
-  }
-
-  return recipient;
-}
-
 function buildContactMail(payload) {
   return {
-    to: getContactRecipient(),
+    to: "yamispereyra@gmail.com",
     subject: "Contacto web",
     html: `${payload.nombre} se contacto a traves de la web y quiere mas informacion a este correo: ${payload.email} <br>
                Ademas, hizo el siguiente comentario: ${payload.mensaje} <br>

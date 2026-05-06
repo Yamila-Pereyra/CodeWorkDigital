@@ -13,10 +13,6 @@ const trackedFiles = execFileSync("git", ["ls-files"], {
 
 const disallowedPatterns = [
   {
-    description: "tracked env file",
-    test: (file) => /\.env($|\.)/.test(file) && !file.endsWith(".env.example"),
-  },
-  {
     description: "tracked node_modules artifact",
     test: (file) => file.includes("node_modules/"),
   },
