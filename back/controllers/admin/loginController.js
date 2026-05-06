@@ -23,9 +23,8 @@ function showLogin(req, res) {
 }
 
 async function logout(req, res) {
-  var cookieName = process.env.SESSION_COOKIE_NAME || "codework.sid";
   await destroySession(req);
-  res.clearCookie(cookieName);
+  res.clearCookie("connect.sid");
   res.redirect("/admin/login");
 }
 
