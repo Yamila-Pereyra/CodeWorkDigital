@@ -17,6 +17,7 @@ const forbiddenNewColumns = [
   "estado",
   "img_id",
 ];
+const forbiddenPublicNovedadesFields = [...forbiddenNewColumns, "link"];
 
 function read(relativePath) {
   return readFileSync(path.join(root, relativePath), "utf8");
@@ -80,6 +81,9 @@ assert(!/WHERE\s+estado/i.test(model), "novedades model must not filter by estad
 const publicPage = read("src/app/novedades/page.js");
 ["item.titulo", "item.subtitulo", "item.cuerpo"].forEach((token) =>
   assertIncludes(publicPage, token, "src/app/novedades/page.js")
+);
+forbiddenPublicNovedadesFields.forEach((token) =>
+  assertExcludes(publicPage, token, "src/app/novedades/page.js")
 );
 
 const itemComponent = read("src/components/NovedadItem.js");

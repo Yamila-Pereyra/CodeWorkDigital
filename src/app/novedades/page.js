@@ -46,8 +46,8 @@ export default async function Novedades() {
             <NovedadItem
               key={item.id}
               title={item.titulo}
-              subtitle={item.subtitulo || item.fecha_publicacion}
-              body={item.cuerpo || item.descripcion}
+              subtitle={item.subtitulo}
+              body={item.cuerpo}
             />
           ))
         ) : (
