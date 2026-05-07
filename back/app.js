@@ -19,6 +19,16 @@ function isApiRequest(req) {
   return req.originalUrl.startsWith("/api/");
 }
 
+function isNovedadesApiRequest(req) {
+  return req.method === "GET" && req.originalUrl === "/api/novedades";
+}
+
+function logNovedadesApiError(error) {
+  console.error("[GET /api/novedades] Error:", error);
+  console.error("[GET /api/novedades] Message:", error && error.message);
+  console.error("[GET /api/novedades] Stack:", error && error.stack);
+}
+
 function secured(req, res, next) {
   if (req.session && req.session.id_usuario) {
     next();
@@ -63,6 +73,10 @@ app.use(function (err, req, res, next) {
   var isDevelopment = req.app.get("env") === "development";
   var publicMessage =
     status >= 500 && !isDevelopment ? "Internal server error" : err.message;
+
+  if (status >= 500 && isNovedadesApiRequest(req)) {
+    logNovedadesApiError(err);
+  }
 
   if (isApiRequest(req)) {
     res.status(status).json({
