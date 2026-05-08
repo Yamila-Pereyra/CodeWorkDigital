@@ -13,6 +13,18 @@ function normalizeRequiredString(value) {
   return value.trim();
 }
 
+function normalizeFechaPublicacion(value) {
+  if (!value) {
+    return "";
+  }
+
+  if (value instanceof Date) {
+    return value.toISOString().slice(0, 10);
+  }
+
+  return String(value).slice(0, 10);
+}
+
 function validateNovedadShape(novedad) {
   if (!novedad || typeof novedad !== "object") {
     throw new Error("Invalid novedad payload");
@@ -27,8 +39,8 @@ function normalizeNovedadRow(row) {
   const novedad = {
     id: row.id,
     titulo: row.titulo,
-    subtitulo: row.subtitulo,
-    cuerpo: row.cuerpo,
+    subtitulo: normalizeFechaPublicacion(row.fecha_publicacion),
+    cuerpo: row.descripcion,
   };
 
   validateNovedadShape(novedad);

@@ -11,13 +11,7 @@ const {
   serializePublicNovedad,
 } = require(path.join(root, "back/lib/novedadesContract.js"));
 
-const forbiddenNewColumns = [
-  "descripcion",
-  "fecha_publicacion",
-  "estado",
-  "img_id",
-];
-const forbiddenPublicNovedadesFields = [...forbiddenNewColumns, "link"];
+const forbiddenPublicNovedadesFields = ["descripcion", "fecha_publicacion", "estado", "img_id", "link"];
 
 function read(relativePath) {
   return readFileSync(path.join(root, relativePath), "utf8");
@@ -41,8 +35,6 @@ const legacyFiles = [
   "database/schema.sql",
   "database/seed.sql",
   "back/novedades_schema.sql",
-  "back/models/novedadesModel.js",
-  "back/lib/novedadesContract.js",
   "back/services/novedadesService.js",
   "back/views/admin/agregar.hbs",
   "back/views/admin/modificar.hbs",
@@ -52,7 +44,6 @@ const legacyFiles = [
 for (const file of legacyFiles) {
   const content = read(file);
 
-  forbiddenNewColumns.forEach((token) => assertExcludes(content, token, file));
   assert(!/\bname="link"/.test(content), `${file} must not submit link`);
   assert(!/\blink\b/.test(content.replace(/<link[^>]*>/g, "")), `${file} must not require link`);
 }
@@ -61,7 +52,6 @@ for (const file of [
   "database/schema.sql",
   "database/seed.sql",
   "back/novedades_schema.sql",
-  "back/models/novedadesModel.js",
   "back/lib/novedadesContract.js",
   "back/views/admin/agregar.hbs",
   "back/views/admin/modificar.hbs",
@@ -74,9 +64,14 @@ for (const file of [
 }
 
 const model = read("back/models/novedadesModel.js");
-assertIncludes(model, "SELECT id, titulo, subtitulo, cuerpo", "back/models/novedadesModel.js");
+assertIncludes(
+  model,
+  "SELECT id, titulo, descripcion, fecha_publicacion, estado",
+  "back/models/novedadesModel.js"
+);
 assertIncludes(model, "FROM novedades", "back/models/novedadesModel.js");
 assert(!/WHERE\s+estado/i.test(model), "novedades model must not filter by estado");
+assert(!/\bSELECT\s+id,\s*titulo,\s*subtitulo,\s*cuerpo/i.test(model), "novedades model must not query missing DB columns");
 
 const publicPage = read("src/app/novedades/page.js");
 ["item.titulo", "item.subtitulo", "item.cuerpo"].forEach((token) =>
@@ -90,7 +85,7 @@ const itemComponent = read("src/components/NovedadItem.js");
 ["title", "subtitle", "body"].forEach((token) =>
   assertIncludes(itemComponent, token, "src/components/NovedadItem.js")
 );
-forbiddenNewColumns.forEach((token) =>
+["descripcion", "fecha_publicacion", "estado", "img_id"].forEach((token) =>
   assertExcludes(itemComponent, token, "src/components/NovedadItem.js")
 );
 
@@ -116,13 +111,14 @@ assert(normalizedInput.cuerpo === "Cuerpo legacy", "buildNovedadInput must trim 
 const normalizedRow = normalizeNovedadRow({
   id: 10,
   titulo: "Titulo",
-  subtitulo: "Subtitulo",
-  cuerpo: "Cuerpo",
+  descripcion: "Descripcion",
+  fecha_publicacion: "2026-04-23",
+  estado: 1,
 });
 
 assert(normalizedRow.id === 10, "normalizeNovedadRow must preserve id");
-assert(normalizedRow.subtitulo === "Subtitulo", "normalizeNovedadRow must expose subtitulo");
-assert(normalizedRow.cuerpo === "Cuerpo", "normalizeNovedadRow must expose cuerpo");
+assert(normalizedRow.subtitulo === "2026-04-23", "normalizeNovedadRow must map fecha_publicacion to subtitulo");
+assert(normalizedRow.cuerpo === "Descripcion", "normalizeNovedadRow must map descripcion to cuerpo");
 
 const serializedNovedad = serializePublicNovedad(normalizedRow);
 assert(

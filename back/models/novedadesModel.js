@@ -3,7 +3,7 @@ var { normalizeNovedadRow } = require("../lib/novedadesContract");
 
 async function getNovedades() {
   var query = `
-    SELECT id, titulo, subtitulo, cuerpo
+    SELECT id, titulo, descripcion, fecha_publicacion, estado
     FROM novedades
   `;
   var rows = await pool.query(query);
@@ -33,7 +33,7 @@ async function deleteNovedadesById(id) {
 
 async function getNovedadById(id) {
   var query = `
-    SELECT id, titulo, subtitulo, cuerpo
+    SELECT id, titulo, descripcion, fecha_publicacion, estado
     FROM novedades
     WHERE id = ?
   `;
