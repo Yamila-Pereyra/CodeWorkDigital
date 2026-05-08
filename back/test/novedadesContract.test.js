@@ -43,19 +43,20 @@ test("buildNovedadInput rechaza payloads legacy incompletos", function () {
   );
 });
 
-test("normalizeNovedadRow normaliza filas de DB legacy", function () {
+test("normalizeNovedadRow normaliza filas de DB real al DTO publico", function () {
   var novedad = normalizeNovedadRow({
     id: 22,
     titulo: "Titulo",
-    subtitulo: "Subtitulo",
-    cuerpo: "Cuerpo",
+    descripcion: "Descripcion",
+    fecha_publicacion: new Date("2026-04-23T00:00:00.000Z"),
+    estado: 1,
   });
 
   assert.deepEqual(novedad, {
     id: 22,
     titulo: "Titulo",
-    subtitulo: "Subtitulo",
-    cuerpo: "Cuerpo",
+    subtitulo: "2026-04-23",
+    cuerpo: "Descripcion",
   });
 });
 
